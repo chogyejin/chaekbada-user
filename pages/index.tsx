@@ -1,18 +1,11 @@
 import Link from 'next/link';
+import Layout from '../Components/Layout';
 
 export default function Home() {
   return (
-    <ul>
-      <li>
-        <Link href="/">
-          <a>Home</a>
-        </Link>
-      </li>
-      <li>
-        <Link href="/about">
-          <a>About Us</a>
-        </Link>
-      </li>
-    </ul>
+    <>
+      <div>MainContainer</div>
+      <Link href="/postList">게시판 가기</Link>
+    </>
   );
 }

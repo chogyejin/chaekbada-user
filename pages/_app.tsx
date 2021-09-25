@@ -1,7 +1,20 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import Head from 'next/head';
+import '../styles/globals.css';
+import type { AppProps } from 'next/app';
+import Layout from '../Components/Layout';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return (
+    <>
+      <Head>
+        <title>책바다</title>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </>
+  );
 }
-export default MyApp
+export default MyApp;
