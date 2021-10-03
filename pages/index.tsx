@@ -6,13 +6,13 @@ export default function Home() {
     <>
       <div>MainContainer</div>
       <div>
-        <Link href="/postList">게시판 가기</Link>
+        <Link href="/PostList">게시판 가기</Link>
       </div>
       <div>
-        <Link href="/login">로그인 가기</Link>
+        <Link href="/Login">로그인 가기</Link>
       </div>
       <div>
-        <Link href="/signup">회원가입 가기</Link>
+        <Link href="/SignUp">회원가입 가기</Link>
       </div>
     </>
   );
