@@ -13,6 +13,7 @@ export default function Signup() {
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
+    //로딩중이 아니고 입력 다 받으면 보내기
     if (!isLoading && email && password) {
       setIsLoading(true);
 
