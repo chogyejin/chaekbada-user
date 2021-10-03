@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import Link from 'next/link';
 
-export default function Signup() {
+export default function SignUp() {
   const [isLoading, setIsLoading] = useState(false);
   // const emailRef = useRef<HTMLInputElement>(null);
   // const pwdRef = useRef<HTMLInputElement>(null);
