@@ -1,33 +1,53 @@
 import Link from 'next/link';
+import styles from 'D:/chaekbada-user2/styles/Header.module.scss'
 
-export default function Header() {
+const Header = () => {
   return (
-    <>
-      <div className="header">
-        <div className="headerFirst">
-          <div id="logo">로고</div>
-          <div id="myMenu">
-            {/* 로그인 li는 로그인하면 로그아웃으로 */}
-            <div>
-              <Link href="#">로그인</Link>
-            </div>
-            <div>
-              <Link href="#">내 정보</Link>
-            </div>
-            <div>
-              <Link href="#">문의하기</Link>
-            </div>
-          </div>
+    <header className={styles.header}>
+      <div className={styles.contents}>
+        <div className={styles.logo_container}>
+          <Link href="#">
+            <a>Traffickr</a>
+          </Link>
         </div>
-        <div className="headerSecond">
-          <div>
-            <Link href="#">전체 책</Link>
-          </div>
-          <div>
-            <Link href="#">솔루션 게시판</Link>
-          </div>
-        </div>
+
+        <nav className={styles.navigation}>
+          <ul>
+            <li>
+            <Link href="#">
+            
+              <a>로그인</a>
+              </Link>
+            </li>
+            <li>
+            <Link href="#">
+            <a>내 정보</a>
+            </Link>
+            </li>
+            <li>
+            <Link href="#">    
+              
+                <a>문의하기</a>
+                </Link>
+            </li>
+            <li>
+            <Link href="#">
+                <a>전체 책</a>
+                </Link>
+            </li>
+            <li>
+            <Link href="#">
+                <a>솔루션 게시판</a>
+                </Link>
+
+            </li>
+          </ul>
+        </nav>
       </div>
+    </header>
+  )
+}
+export default Header
       <style jsx>
         {`
           .header {

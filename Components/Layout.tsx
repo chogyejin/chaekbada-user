@@ -1,12 +1,21 @@
-import Header from './Header';
-import Footer from './Footer';
+import Header from 'D:/chaekbada-user2/Components/Header';
+import Footer from 'D:/chaekbada-user2/Components/Footer';
+import styles from 'D:/chaekbada-user2/styles/Layout.module.scss';
 
-export default function Layout(props: any) {
+const Layout = (props: {
+  children: React.ReactNode
+}) => {
   return (
-    <>
-      <Header></Header>
-      {props.children}
-      <Footer></Footer>
-    </>
-  );
+    <div className={styles.layout}>
+      <Header />
+
+      <main className={styles.main}>
+        {props.children}
+      </main>
+      
+      <Footer />
+    </div>
+  )
 }
+
+export default Layout

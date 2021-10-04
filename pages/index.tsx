@@ -1,19 +1,13 @@
 import Link from 'next/link';
-import Layout from '../Components/Layout';
+import Layout from 'D:/chaekbada-user2/Components/Layout';
+import HomeContainer from 'D:/chaekbada-user2/Home/HomeContainer';
 
-export default function Home() {
+const HomePage = () => {
   return (
-    <>
-      <div>MainContainer</div>
-      <div>
-        <Link href="/postList">게시판 가기</Link>
-      </div>
-      <div>
-        <Link href="/login">로그인 가기</Link>
-      </div>
-      <div>
-        <Link href="/signup">회원가입 가기</Link>
-      </div>
-    </>
-  );
+    <Layout>
+      <HomeContainer />
+    </Layout>
+  )
 }
+  
+  export default HomePage
