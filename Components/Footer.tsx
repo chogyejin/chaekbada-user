@@ -1,4 +1,4 @@
-import styles from "D:/chaekbada-user2/styles/Footer.module.scss";
+import styles from "/styles/Footer.module.scss";
 const Footer = () => {
   return (
     <footer className={styles.footer}>

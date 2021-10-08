@@ -1,6 +1,6 @@
-import Header from 'D:/chaekbada-user2/Components/Header';
-import Footer from 'D:/chaekbada-user2/Components/Footer';
-import styles from 'D:/chaekbada-user2/styles/Layout.module.scss';
+import Header from './Header';
+import Footer from './Footer';
+import styles from '/styles/Layout.module.scss';
 
 const Layout = (props: {
   children: React.ReactNode

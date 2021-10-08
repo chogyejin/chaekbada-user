@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import styles from 'D:/chaekbada-user2/styles/Header.module.scss'
+import styles from '/styles/Header.module.scss'
 
 const Header = () => {
   return (
@@ -47,39 +47,5 @@ const Header = () => {
     </header>
   )
 }
-export default Header
-      <style jsx>
-        {`
-          .header {
-            background-color: #c4f0be;
-            max-width: 1140px;
-            margin: 0 auto;
-          }
-          .headerFirst {
-            display: flex;
-            justify-content: space-between;
-          }
-          #logo {
-            flex: 3;
-          }
-          #myMenu {
-            display: flex;
-            flex: 1;
-          }
-          #myMenu div {
-            width: 100%;
-            margin-left: 30px;
-            text-align: center;
-          }
-          .headerSecond {
-            display: flex;
-            justify-content: center;
-          }
-          .headerSecond div {
-            margin-left: 30px;
-          }
-        `}
-      </style>
-    </>
-  );
-}
+
+export default Header;

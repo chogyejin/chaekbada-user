@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import styles from 'D:/chaekbada-user2/styles/HomeContainer.module.scss';
+import styles from '/styles/HomeContainer.module.scss';
 const HomeContainer = () => {
     return (
         <>

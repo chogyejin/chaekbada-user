@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import Layout from 'D:/chaekbada-user2/Components/Layout';
-import HomeContainer from 'D:/chaekbada-user2/Home/HomeContainer';
+import Layout from '../Components/Layout';
+import HomeContainer from '../Home/HomeContainer';
 
 const HomePage = () => {
   return (
