@@ -1,12 +1,21 @@
 import Header from './Header';
 import Footer from './Footer';
+import styles from '/styles/Layout.module.scss';
 
-export default function Layout(props: any) {
+const Layout = (props: {
+  children: React.ReactNode
+}) => {
   return (
-    <>
-      <Header></Header>
-      {props.children}
-      <Footer></Footer>
-    </>
-  );
+    <div className={styles.layout}>
+      <Header />
+
+      <main className={styles.main}>
+        {props.children}
+      </main>
+      
+      <Footer />
+    </div>
+  )
 }
+
+export default Layout

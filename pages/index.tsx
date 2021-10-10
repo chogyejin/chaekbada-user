@@ -1,19 +1,13 @@
 import Link from 'next/link';
 import Layout from '../Components/Layout';
+import HomeContainer from '../Home/HomeContainer';
 
-export default function Home() {
+const HomePage = () => {
   return (
-    <>
-      <div>MainContainer</div>
-      <div>
-        <Link href="/PostList">게시판 가기</Link>
-      </div>
-      <div>
-        <Link href="/Login">로그인 가기</Link>
-      </div>
-      <div>
-        <Link href="/SignUp">회원가입 가기</Link>
-      </div>
-    </>
+    <Layout>
+      <HomeContainer />
+    </Layout>
   );
-}
+};
+
+export default HomePage;
