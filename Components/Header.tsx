@@ -1,12 +1,13 @@
 import Link from 'next/link';
 import styles from '/styles/Header.module.scss'
+import React from "react";
 
 const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.contents}>
         <div className={styles.logo_container}>
-          <Link href="#">
+          <Link href="/">
             <a>Traffickr</a>
           </Link>
         </div>
@@ -14,13 +15,13 @@ const Header = () => {
         <nav className={styles.navigation}>
           <ul>
             <li>
-            <Link href="#">
+            <Link href="/login">
             
               <a>로그인</a>
               </Link>
             </li>
             <li>
-            <Link href="#">
+            <Link href="/my_info">
             <a>내 정보</a>
             </Link>
             </li>
@@ -31,15 +32,20 @@ const Header = () => {
                 </Link>
             </li>
             <li>
-            <Link href="#">
+            <Link href="/book_list">
                 <a>전체 책</a>
                 </Link>
             </li>
             <li>
-            <Link href="#">
+            <Link href="/solution">
                 <a>솔루션 게시판</a>
                 </Link>
 
+            </li>
+            <li>
+            <Link href="/signup">
+              <a>회원가입</a>
+              </Link>
             </li>
           </ul>
         </nav>
