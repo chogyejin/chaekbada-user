@@ -35,11 +35,13 @@ const Button = styled.div`
   background-color: #03c75a;
  
 `;
-//아디 비번 값 받기
-//값없으면 disabled
+
 function signup() {
   return (
     <Container>
+      <Input id="name" name="name" placeholder="이름을 입력해주세요" />
+      <Input id="nickname" name="nickname" placeholder="닉네임을 입력해주세요 "/>
+
       <Input id="id" name="id" placeholder="아이디를 입력해주세요" />
       <Input
         id="password"
@@ -52,6 +54,7 @@ function signup() {
       <Input id="school" name="school" placeholder="재학 중인 학교를 입력해주세요" />
       <Input id="phoneNumber" name="phoneNumber" placeholder="전화번호를 입력해주세요 "/>
       <Input id="email" name="email" placeholder="이메일을 입력해주세요 "/>
+     
 
       <Button>회원가입</Button>
     </Container>
