@@ -15,7 +15,7 @@ const Header = () => {
         <nav className={styles.navigation}>
           <ul>
             <li>
-            <Link href="/login">
+            <Link href="/Login">
             
               <a>로그인</a>
               </Link>
