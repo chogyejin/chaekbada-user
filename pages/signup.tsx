@@ -1,66 +1,123 @@
-import React from 'react';
-import styled from "styled-components";
+import React, { useRef, useState } from 'react';
+import Link from 'next/link';
 
+export default function SignUp() {
+  const [isLoading, setIsLoading] = useState(false);
+  // const emailRef = useRef<HTMLInputElement>(null);
+  // const pwdRef = useRef<HTMLInputElement>(null);
+  // const pwdCheckRef = useRef<HTMLInputElement>(null);
 
-const Container = styled.div`
-  margin-top: 100px;
-  padding: 20px;
-`;
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [passwordCheck, setPasswordCheck] = useState<string>('');
+  const [name,setName] = useState<string>('');
+  function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    //로딩중이 아니고 입력 다 받으면 보내기
+    if (!isLoading && email && password) {
+      setIsLoading(true);
 
-const Input = styled.input`
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  height: 40px;
-  margin: 0 0 8px;
-  padding: 5px 39px 5px 11px;
-  border: solid 1px #dadada;
-  background: #fff;
-  box-sizing: border-box;
-`;
+      // const email = emailRef.current.value;
+      // const pwd = pwdRef.current.value;
+      console.log(email);
+      console.log(password);
+    }
+    setIsLoading(false);
+  }
 
-const Button = styled.div`
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 49px;
-  display: block;
-  width: 100%;
-  height: 49px;
-  margin: 16px 0 7px;
-  cursor: pointer;
-  text-align: center;
-  color: #fff;
-  border: none;
-  border-radius: 0;
-  background-color: #03c75a;
- 
-`;
-
-function signup() {
   return (
-    <Container>
-      <Input id="name" name="name" placeholder="이름을 입력해주세요" />
-      <Input id="nickname" name="nickname" placeholder="닉네임을 입력해주세요 "/>
+    <>
+      <form onSubmit={onSubmit}>
+        <div className="input_area">
+          <label>이메일</label>
+          <input
+            type="email"
+            placeholder="이메일 입력"
+            // ref={emailRef}
+            value={email}
+            onChange={(event) => {
+              setEmail(event.target.value);
+            }}
+          />
+        </div>
 
-      <Input id="id" name="id" placeholder="아이디를 입력해주세요" />
-      <Input
-        id="password"
-        name="password"
-        type="password"
-        placeholder="비밀번호를 입력해주세요"
-        
-      />
-      <Input id="passwordcheck" name="passwordcheck" type="passwordcheck" placeholder="비밀번호 재확인"/>
-      <Input id="school" name="school" placeholder="재학 중인 학교를 입력해주세요" />
-      <Input id="phoneNumber" name="phoneNumber" placeholder="전화번호를 입력해주세요 "/>
-      <Input id="email" name="email" placeholder="이메일을 입력해주세요 "/>
-     
+        <div className="input_area">
+          <label>비밀번호</label>
+          <input
+            type="password"
+            placeholder="비밀번호 입력"
+            // ref={pwdRef}
+            value={password}
+            onChange={(event) => {
+              setPassword(event.target.value);
+            }}
+          />
+        </div>
 
-      <Button>회원가입</Button>
-    </Container>
+        <div className="input_area">
+          <label>비밀번호 확인</label>
+          <input
+            type="password"
+            placeholder="비밀번호 재입력"
+            // ref={pwdCheckRef}
+            value={passwordCheck}
+            onChange={(event) => {
+              setPasswordCheck(event.target.value);
+            }}
+          />
+        </div>
+
+        {/* 비밀번호 확인 */}
+        <div>
+          {password !== passwordCheck &&
+            passwordCheck &&
+            '비밀번호를 다시 입력하세요.'}
+        </div>
+        <div className="input_area">
+          <label>이름</label>
+          <input
+            type="name"
+            placeholder="이름 입력"
+            // ref={emailRef}
+            value={name}
+            onChange={(event) => {
+              setName(event.target.value);
+            }}
+          />
+        </div>
+
+      
+
+        <button
+          style={{
+            opacity: isLoading ? 0.3 : 1,
+          }}>
+          {isLoading ? '회원가입 중..' : '회원가입'}
+        </button>
+        <div>
+          <Link href="/">돌아가기</Link>
+        </div>
+      </form>
+      <style jsx>
+        {`
+          .input_area input {
+            background-color: gray;
+            position: relative;
+            width:100%;
+            height:40px;
+            margin 0 0 8px;
+            padding : 50x 39px 5px 11px;
+            border: solid 1px #dadada;
+            box-sizing: border-box;
+          }
+          .input_area label{
+            margin-top: 100px;
+            padding: 20px;
+            color:blue;
+          }
+        `}
+       
+      </style>
+    </>
   );
 }
-
-
-
-export default signup;
