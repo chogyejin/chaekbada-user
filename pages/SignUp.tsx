@@ -1,5 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import DaumPostcode, { Address } from 'react-daum-postcode';
+import AddressComponent from '../Components/Address';
 
 export default function SignUp() {
   const [isLoading, setIsLoading] = useState(false);
@@ -12,15 +14,15 @@ export default function SignUp() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [passwordCheck, setPasswordCheck] = useState<string>('');
-  const[name, setName] = useState<string>('');
-  const[school_name,setSchool_name] = useState<string>('');
-  
-
+  const [name, setName] = useState<string>('');
+  const [school_name, setSchool_name] = useState<string>('');
+  const [address, setAddress] = useState<string>('');
+  const [isOpen, SetIsOpen] = useState<boolean>(false);
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     //로딩중이 아니고 입력 다 받으면 보내기
-    if (!isLoading && email && password &&name) {
+    if (!isLoading && email && password && name) {
       setIsLoading(true);
 
       // const email = emailRef.current.value;
@@ -32,6 +34,13 @@ export default function SignUp() {
     setIsLoading(false);
   }
 
+  function openPopup() {
+    SetIsOpen(true);
+  }
+
+  function getAddress(address: string) {
+    setAddress(address);
+  }
   return (
     <>
       <form onSubmit={onSubmit}>
@@ -73,6 +82,14 @@ export default function SignUp() {
             }}
           />
         </div>
+
+        {/* 비밀번호 확인 */}
+        <div>
+          {password !== passwordCheck &&
+            passwordCheck &&
+            '비밀번호를 다시 입력하세요.'}
+        </div>
+
         <div className="input_area">
           <label>이름</label>
           <input
@@ -98,12 +115,19 @@ export default function SignUp() {
           />
         </div>
 
-
-        {/* 비밀번호 확인 */}
         <div>
-          {password !== passwordCheck &&
-            passwordCheck &&
-            '비밀번호를 다시 입력하세요.'}
+          <label>주소</label>
+          <input type="text" placeholder="주소 입력" value={address} />
+          <button onClick={openPopup}>주소찾기</button>
+          {isOpen && (
+            <>
+              <AddressComponent getAddress={getAddress} />
+            </>
+          )}
+        </div>
+        <div>
+          <label>상세주소</label>
+          <input type="text" placeholder="상세주소 입력" />
         </div>
 
         <button
