@@ -7,16 +7,22 @@ const Header = () => {
       <div className={styles.contents}>
         <div className={styles.logo_container}>
           <Link href="#">
-            <a>Traffickr</a>
+            <a>Chaekbada</a>
           </Link>
         </div>
 
         <nav className={styles.navigation}>
           <ul>
             <li>
-            <Link href="#">
+            <Link href="/Login">
             
               <a>로그인</a>
+              </Link>
+            </li>
+            <li>
+            <Link href="/SignUp">
+            
+              <a>회원가입</a>
               </Link>
             </li>
             <li>
