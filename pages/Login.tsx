@@ -1,10 +1,14 @@
+<<<<<<< HEAD
 import React, {useState,useEffect} from 'react'
 import axios from 'axios';
+=======
+import React, { useState } from 'react';
+>>>>>>> 7529a1c47a63f85a7dc1fca1c0caf1aeeda6de8c
 
-
-function Login() {
+export default function Login() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+<<<<<<< HEAD
   const handleInputId = (e: { target: { value: React.SetStateAction<string>; }; }) => {
     setEmail(e.target.value)
 }
@@ -58,45 +62,68 @@ useEffect(() => {
  
 
  
+=======
+>>>>>>> 7529a1c47a63f85a7dc1fca1c0caf1aeeda6de8c
 
+  console.log(email, password);
   return (
-      <div className="loginregister">
-        <form>
-            <div><input name="email" type="email" placeholder="이메일" value={email} onChange={(event)=>{
-            setEmail(event.target.value);
-          }} className="loginregister__input"/></div>
-            <div><input name="password" type="password" placeholder="비밀번호" value={password} onChange={(event)=>{
-            setPassword(event.target.value);
-          }} className="loginregister__input"/></div>
-            <div><button type="submit"  className="loginregister__button">로그인</button></div>
-        </form>
-        <style jsx>
+    <div className="loginregister">
+      <form>
+        <div>
+          <input
+            name="email"
+            type="email"
+            placeholder="이메일"
+            value={email}
+            onChange={(event) => {
+              setEmail(event.target.value);
+            }}
+            className="loginregister__input"
+          />
+        </div>
+        <div>
+          <input
+            name="password"
+            type="password"
+            placeholder="비밀번호"
+            value={password}
+            onChange={(event) => {
+              setPassword(event.target.value);
+            }}
+            className="loginregister__input"
+          />
+        </div>
+        <div>
+          <button type="submit" className="loginregister__button">
+            로그인
+          </button>
+        </div>
+      </form>
+      <style jsx>
         {`
-        .loginregister{
-          display:flex;
-          align-items:center;
-          justify-content: center;
-          height:100vh;
-        }
-        .loginregister__input{
-          width:300px;
-          height:50px;
-          padding-left:10px;
-          marign:10px;
-        }
-        .loginregister__button{
-          background-color: rgb(248, 47, 98);
-          color: rgb(255, 255, 255);
-          font-weight: 700;
-          width: 100%;
-          border-radius: 40px;
-          height: 48px;
-          margin-top: 10px;
-        }
+          .loginregister {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+          }
+          .loginregister__input {
+            width: 300px;
+            height: 50px;
+            padding-left: 10px;
+            marign: 10px;
+          }
+          .loginregister__button {
+            background-color: rgb(248, 47, 98);
+            color: rgb(255, 255, 255);
+            font-weight: 700;
+            width: 100%;
+            border-radius: 40px;
+            height: 48px;
+            margin-top: 10px;
+          }
         `}
       </style>
-      </div>
-    );
-  }
-
-export default Login;
+    </div>
+  );
+}
