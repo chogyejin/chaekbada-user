@@ -3,13 +3,35 @@
 import axios from 'axios';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
+import useSWR from 'swr';
 
 
 export default function Login() {
+  const {data:userData, error, mutate} = useSWR('',fetcher);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [LoginError, setLoginError] = useState(false);
+  function onSubmit(e: React.FormEvent){
+    e.preventDefault();
+    setLoginError(false);
+    axios
+    .post(
+      '',
+      {email,password},{
+        withCredentials:true,
+      },
+    )
+    .then(() =>{
+      mutate();
+    })
+    .catch((error)=>{
+      setLoginError(error.response?.data?.code ===401);
+    });
+  
+  }
 
-  console.log(email, password);
+  
   return (
     <div className="loginregister">
       <form>
@@ -41,6 +63,14 @@ export default function Login() {
           <button type="submit" className="loginregister__button">
             로그인
           </button>
+        </div>
+        <div>
+          <button type="submit" className="loginregister__button" >
+            <Link href="/SignUp">
+            회원가입하러가기
+            </Link>
+          </button>
+            
         </div>
       </form>
       <style jsx>
