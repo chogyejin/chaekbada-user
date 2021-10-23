@@ -17,7 +17,7 @@ export default function SignUp() {
   const [name, setName] = useState<string>('');
   const [school_name, setSchool_name] = useState<string>('');
   const [address, setAddress] = useState<string>('');
-  const [isOpen, SetIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -35,11 +35,12 @@ export default function SignUp() {
   }
 
   function openPopup() {
-    SetIsOpen(true);
+    setIsOpen(true);
   }
 
   function getAddress(address: string) {
     setAddress(address);
+    setIsOpen(false);
   }
   return (
     <>
@@ -85,8 +86,8 @@ export default function SignUp() {
 
         {/* 비밀번호 확인 */}
         <div>
-          {password !== passwordCheck &&
-            passwordCheck &&
+          {passwordCheck &&
+            password !== passwordCheck &&
             '비밀번호를 다시 입력하세요.'}
         </div>
 
