@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import DaumPostcode, { Address } from 'react-daum-postcode';
 import AddressComponent from '../Components/Address';
+import axios from 'axios';
+
 
 export default function SignUp() {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,14 +17,21 @@ export default function SignUp() {
   const [password, setPassword] = useState<string>('');
   const [passwordCheck, setPasswordCheck] = useState<string>('');
   const [name, setName] = useState<string>('');
-  const [school_name, setSchool_name] = useState<string>('');
+  const [schoolName, setSchoolName] = useState<string>('');
+  
+  
   const [address, setAddress] = useState<string>('');
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [detailAddress,setDetailAddress]=useState<string>('');//상세주소
+  const [isOpen, SetIsOpen] = useState<boolean>(false);
+  const [signUpSuccess, setSignUpSuccess]=useState(false);
+  const [signUpError, setSignUpError]=useState('');
+ 
+  
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     //로딩중이 아니고 입력 다 받으면 보내기
-    if (!isLoading && email && password && name) {
+    if (!isLoading && email && password && name &&schoolName&& address&&detailAddress ) {
       setIsLoading(true);
 
       // const email = emailRef.current.value;
@@ -30,124 +39,148 @@ export default function SignUp() {
       console.log(email);
       console.log(password);
       console.log(name);
-    }
+      console.log(schoolName);
+      console.log(address);
+      console.log(detailAddress);}
+      
+    
     setIsLoading(false);
+    async (email: any, password: any,name: any,schoolName: any,address: any,detailAddress: any) => {
+      try {
+        const response = await axios.post(``, {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          email: email,
+          password: password,
+          name: name,
+          schoolName: schoolName,
+          address:address,
+          detailAddress:detailAddress
+        });
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    };
   }
+    
+   
+  
 
   function openPopup() {
-    setIsOpen(true);
+    SetIsOpen(true);
   }
 
   function getAddress(address: string) {
     setAddress(address);
-    setIsOpen(false);
+    SetIsOpen(false);
   }
   return (
-    <>
+    
+    
+    <div className="loginregister">
       <form onSubmit={onSubmit}>
-        <div className="input_area">
-          <label>이메일</label>
-          <input
-            type="email"
-            placeholder="이메일 입력"
-            // ref={emailRef}
-            value={email}
-            onChange={(event) => {
-              setEmail(event.target.value);
-            }}
-          />
-        </div>
-
-        <div className="input_area">
-          <label>비밀번호</label>
-          <input
-            type="password"
-            placeholder="비밀번호 입력"
-            // ref={pwdRef}
-            value={password}
-            onChange={(event) => {
-              setPassword(event.target.value);
-            }}
-          />
-        </div>
-
-        <div className="input_area">
-          <label>비밀번호 확인</label>
-          <input
-            type="password"
-            placeholder="비밀번호 재입력"
-            // ref={pwdCheckRef}
-            value={passwordCheck}
-            onChange={(event) => {
-              setPasswordCheck(event.target.value);
-            }}
-          />
-        </div>
-
-        {/* 비밀번호 확인 */}
         <div>
+      
+          <input name="name" type="name" placeholder="이름" value={name} onChange={(event)=>{
+            setName(event.target.value);
+          }}
+          className="loginregister__input"
+          />
+          </div>
+          <div>
+          <input name="email" type="email" placeholder="이메일" value={email} onChange={(event)=>{
+            setEmail(event.target.value);
+          }}
+          className="loginregister__input"
+          />
+          </div>
+          <div>
+          <input name="password" type="password" placeholder="비밀번호" value={password} onChange={(event)=>{
+            setPassword(event.target.value);
+          }}
+          className="loginregister__input"
+          />
+          </div>
+          <div>
+          <input name="passwordCheck" type="password" placeholder="비밀번호 재입력" value={passwordCheck} onChange={(event)=>{
+            setPasswordCheck(event.target.value);
+          }}
+          className="loginregister__input"
+          />
+          </div>
+          <div>
           {passwordCheck &&
             password !== passwordCheck &&
             '비밀번호를 다시 입력하세요.'}
         </div>
-
-        <div className="input_area">
-          <label>이름</label>
-          <input
-            type="name"
-            placeholder="이름 입력"
-            // ref={nameRef}
-            value={name}
-            onChange={(event) => {
-              setPasswordCheck(event.target.value);
-            }}
-          />
-        </div>
-        <div className="input_area">
-          <label>학교</label>
-          <input
-            type="school_name"
-            placeholder="학교 입력"
-            // ref={school_nameRef}
-            value={school_name}
-            onChange={(event) => {
-              setPasswordCheck(event.target.value);
-            }}
-          />
-        </div>
-
         <div>
-          <label>주소</label>
-          <input type="text" placeholder="주소 입력" value={address} />
-          <button onClick={openPopup}>주소찾기</button>
+          <input name="schoolName" type="schoolName" placeholder="학교이름" value={schoolName} onChange={(event)=>{
+            setSchoolName(event.target.value);
+          }}
+          className="loginregister__input"
+          />
+          </div>
+          <div>
+          <input type="text" placeholder="주소" value={address} className="loginregister__input" />
+          <button onClick={openPopup}>주소찾기 </button>
           {isOpen && (
             <>
-              <AddressComponent getAddress={getAddress} />
+            <AddressComponent getAddress={getAddress} />
             </>
           )}
-        </div>
-        <div>
-          <label>상세주소</label>
-          <input type="text" placeholder="상세주소 입력" />
-        </div>
+         
+          </div>
+          <div>
+          <input name="detailAddress" type="detailAddress" placeholder="상세주소" value={detailAddress}  onChange={(event)=>{
+            setDetailAddress(event.target.value);
+          }}
+         
+          className="loginregister__input"
+          />
+          </div>
+          <div>
+            <button type="submit" onSubmit={onSubmit}
+            className="loginregister__button">
+            
+            회원가입
+            </button>
+            </div>
+            </form>
 
-        <button
-          style={{
-            opacity: isLoading ? 0.3 : 1,
-          }}>
-          {isLoading ? '회원가입 중..' : '회원가입'}
-        </button>
-        <div>
-          <Link href="/">돌아가기</Link>
-        </div>
-      </form>
-      <style jsx>
+            
+
+  
+
+        
+        <style jsx>
         {`
-          .input_area input {
-            background-color: gray;
-          }
+        .loginregister{
+          display:flex;
+          align-items:center;
+          justify-content: center;
+          height:100vh;
+        }
+        .loginregister__input{
+          width:300px;
+          height:50px;
+          padding-left:10px;
+          marign:10px;
+        }
+        .loginregister__button{
+          background-color: rgb(248, 47, 98);
+          color: rgb(255, 255, 255);
+          font-weight: 700;
+          width: 100%;
+          border-radius: 40px;
+          height: 48px;
+          margin-top: 10px;
+        }
         `}
       </style>
-    </>
+    </div>
+    
   );
-}
+      }
+
