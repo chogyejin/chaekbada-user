@@ -4,15 +4,17 @@ import axios from 'axios';
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import useSWR from 'swr';
+
+import {useAsync} from 'react-async';
 
 
 
 export default function Login() {
-  
+  const {data:userData, error, mutate} = useSWR('',fetcher);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [LoginError, setLoginError] = useState(false);
-  const [LoginSuccess, setLoginSuccess]=useState(false);
   function onSubmit(e: React.FormEvent){
     e.preventDefault();
     setLoginError(false);
@@ -23,9 +25,8 @@ export default function Login() {
         withCredentials:true,
       },
     )
-    .then((response) =>{
-      console.log(response);
-      setLoginSuccess(true);
+    .then(() =>{
+      mutate();
     })
     .catch((error)=>{
       setLoginError(error.response?.data?.code ===401);
@@ -102,4 +103,5 @@ export default function Login() {
       </style>
     </div>
   );
-}
+        }
+      
