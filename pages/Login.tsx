@@ -1,13 +1,40 @@
-import React, { useState } from 'react';
+
+
+import axios from 'axios';
+
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import useSWR from 'swr';
+
+import {useAsync} from 'react-async';
+
+
 
 export default function Login() {
+  const {data:userData, error, mutate} = useSWR('',fetch);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [LoginError, setLoginError] = useState(false);
+  async function onSubmit(e: React.FormEvent){
+    console.log('나 돌아가니')
+      e.preventDefault();
+    setLoginError(false);
+   
+      try{
+        const response = await axios.get('http://localhost:4000/signIn',{
+          headers:{
+            "Content-Type" : "application/x-www-form-urlencoded"},
+            params:{email,password}})
+           response.data;
+          }catch(error){
+            console.log(error);
+          }
 
-  console.log(email, password);
-  return (
+          };
+        
+      return (
     <div className="loginregister">
-      <form>
+      <form onSubmit={onSubmit}>
         <div>
           <input
             name="email"
@@ -33,9 +60,17 @@ export default function Login() {
           />
         </div>
         <div>
-          <button type="submit" className="loginregister__button">
+          <button onClick={onSubmit} className="loginregister__button">
             로그인
           </button>
+        </div>
+        <div>
+          <button type="submit" className="loginregister__button" >
+            <Link href="/SignUp">
+            회원가입하러가기
+            </Link>
+          </button>
+            
         </div>
       </form>
       <style jsx>
@@ -65,4 +100,6 @@ export default function Login() {
       </style>
     </div>
   );
-}
+        }
+        
+      
