@@ -17,6 +17,7 @@ export default function SignUp() {
   const [name, setName] = useState<string>('');
   const [school_name, setSchool_name] = useState<string>('');
   const [address, setAddress] = useState<string>('');
+  const [fullAddress, setFullAddress] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   function onSubmit(e: React.FormEvent) {
@@ -42,6 +43,8 @@ export default function SignUp() {
     setAddress(address);
     setIsOpen(false);
   }
+
+  console.log(fullAddress);
   return (
     <>
       <form onSubmit={onSubmit}>
@@ -128,7 +131,13 @@ export default function SignUp() {
         </div>
         <div>
           <label>상세주소</label>
-          <input type="text" placeholder="상세주소 입력" />
+          <input
+            type="text"
+            placeholder="상세주소 입력"
+            onChange={(event) => {
+              setFullAddress(address + event.target.value);
+            }}
+          />
         </div>
 
         <button
