@@ -2,6 +2,11 @@ import Head from 'next/head';
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import Layout from '../Components/Layout';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
+
+console.log(cookies);
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -18,3 +23,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 export default MyApp;
+
+//책바다 쿠키가 있는 지 확인
+//있으면 그대로 사용
+//없으면 토큰을 발급하게
