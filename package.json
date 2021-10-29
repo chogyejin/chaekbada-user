@@ -2,6 +2,7 @@
   "name": "chaekbada-user",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:4000",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,6 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "axios": "^0.24.0",
     "next": "11.1.2",
     "react": "17.0.2",
     "react-daum-postcode": "^3.0.0",

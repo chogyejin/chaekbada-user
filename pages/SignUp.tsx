@@ -2,41 +2,55 @@ import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import DaumPostcode, { Address } from 'react-daum-postcode';
 import AddressComponent from '../Components/Address';
+import axios from 'axios';
 
 export default function SignUp() {
-  const [isLoading, setIsLoading] = useState(false);
-  // const emailRef = useRef<HTMLInputElement>(null);
-  // const pwdRef = useRef<HTMLInputElement>(null);
-  //const nameRef= useRef<HTMLInputElement>(null);
-  // const pwdCheckRef = useRef<HTMLInputElement>(null);
-  //const school_nameRef = useRef<HTMLInputElement>(null);
-
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [passwordCheck, setPasswordCheck] = useState<string>('');
   const [name, setName] = useState<string>('');
-  const [school_name, setSchool_name] = useState<string>('');
+  const [universityID, setUniversityID] = useState<string>('');
+  const point = 0;
+  const biddingPoint = 0;
+  const profileImageUrl = 'image';
+  const isAuth = false;
   const [address, setAddress] = useState<string>('');
   const [fullAddress, setFullAddress] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  function onSubmit(e: React.FormEvent) {
+  async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    //로딩중이 아니고 입력 다 받으면 보내기
-    if (!isLoading && email && password && name) {
-      setIsLoading(true);
 
-      // const email = emailRef.current.value;
-      // const pwd = pwdRef.current.value;
-      console.log(email);
-      console.log(password);
-      console.log(name);
+    const response = await axios.post(
+      'http://localhost:4000/signUp',
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+      {
+        params: {
+          email,
+          password,
+          name,
+          address: fullAddress,
+          universityID,
+          point,
+          biddingPoint,
+          profileImageUrl,
+          isAuth,
+        },
+      },
+    );
+
+    if (response.status) {
+      console.log(response.data);
     }
-    setIsLoading(false);
   }
 
-  function openPopup() {
-    setIsOpen(true);
+  function openPopup(e: React.FormEvent) {
+    e.preventDefault();
+    setIsOpen(!isOpen);
   }
 
   function getAddress(address: string) {
@@ -44,7 +58,6 @@ export default function SignUp() {
     setIsOpen(false);
   }
 
-  console.log(fullAddress);
   return (
     <>
       <form onSubmit={onSubmit}>
@@ -102,19 +115,19 @@ export default function SignUp() {
             // ref={nameRef}
             value={name}
             onChange={(event) => {
-              setPasswordCheck(event.target.value);
+              setName(event.target.value);
             }}
           />
         </div>
         <div className="input_area">
           <label>학교</label>
           <input
-            type="school_name"
+            type="text"
             placeholder="학교 입력"
             // ref={school_nameRef}
-            value={school_name}
+            value={universityID}
             onChange={(event) => {
-              setPasswordCheck(event.target.value);
+              setUniversityID(event.target.value);
             }}
           />
         </div>
@@ -135,17 +148,12 @@ export default function SignUp() {
             type="text"
             placeholder="상세주소 입력"
             onChange={(event) => {
-              setFullAddress(address + event.target.value);
+              setFullAddress(address + ' ' + event.target.value);
             }}
           />
         </div>
 
-        <button
-          style={{
-            opacity: isLoading ? 0.3 : 1,
-          }}>
-          {isLoading ? '회원가입 중..' : '회원가입'}
-        </button>
+        <button>회원가입</button>
         <div>
           <Link href="/">돌아가기</Link>
         </div>
