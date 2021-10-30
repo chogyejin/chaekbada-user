@@ -1,57 +1,55 @@
 import Link from 'next/link';
-import styles from '/styles/Header.module.scss'
+import styles from '/styles/Header.module.scss';
 
 const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.contents}>
         <div className={styles.logo_container}>
-          <Link href="#">
+          <Link href="/">
             <a>Chaekbada</a>
           </Link>
         </div>
 
         <nav className={styles.navigation}>
           <ul>
-            <li>
-            <Link href="/Login">
-            
-              <a>로그인</a>
-              </Link>
-            </li>
-            <li>
-            <Link href="/SignUp">
-            
-              <a>회원가입</a>
-              </Link>
-            </li>
-            <li>
-            <Link href="#">
-            <a>내 정보</a>
-            </Link>
-            </li>
-            <li>
-            <Link href="#">    
-              
-                <a>문의하기</a>
+            <div>
+              <li>
+                <Link href="/Login">
+                  <a>로그인</a>
                 </Link>
-            </li>
+              </li>
+              <li>
+                <Link href="/SignUp">
+                  <a>회원가입</a>
+                </Link>
+              </li>
+            </div>
             <li>
-            <Link href="#">
+              <Link href="/BookPosts">
                 <a>전체 책</a>
-                </Link>
+              </Link>
             </li>
             <li>
-            <Link href="#">
+              <Link href="#">
                 <a>솔루션 게시판</a>
-                </Link>
-
+              </Link>
+            </li>
+            <li>
+              <Link href="#">
+                <a>내 정보</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="#">
+                <a>문의하기</a>
+              </Link>
             </li>
           </ul>
         </nav>
       </div>
     </header>
-  )
-}
+  );
+};
 
 export default Header;
