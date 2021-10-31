@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Head from 'next/head';
 
-export default function AllPost() {
+export default function BookPosts() {
   return (
     <>
       <Head>

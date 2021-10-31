@@ -2,6 +2,7 @@
   "name": "chaekbada-user",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:4000",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,15 +10,20 @@
     "lint": "next lint"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@types/styled-components": "^5.1.15",
     "axios": "^0.23.0",
     "immer": "^9.0.6",
     "mysql2": "^2.3.2",
+=======
+    "axios": "^0.24.0",
+>>>>>>> 20bd275f50ada405416164d000243bed782fb2d8
     "next": "11.1.2",
     "react": "17.0.2",
     "react-async": "^10.0.1",
     "react-daum-postcode": "^3.0.0",
     "react-dom": "17.0.2",
+<<<<<<< HEAD
     "react-redux": "^7.2.5",
     "react-router-dom": "^5.3.0",
     "redux-actions": "^2.6.5",
@@ -25,6 +31,10 @@
     "sequelize": "^6.7.0",
     "styled-components": "^5.3.1",
     "swr": "^1.0.1"
+=======
+    "sass": "^1.42.1",
+    "universal-cookie": "^4.0.4"
+>>>>>>> 20bd275f50ada405416164d000243bed782fb2d8
   },
   "devDependencies": {
     "@types/react": "17.0.21",
