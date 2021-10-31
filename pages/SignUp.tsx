@@ -1,6 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
-import DaumPostcode, { Address } from 'react-daum-postcode';
 import AddressComponent from '../Components/Address';
 import axios from 'axios';
 
