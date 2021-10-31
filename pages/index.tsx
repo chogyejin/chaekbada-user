@@ -3,11 +3,7 @@ import Layout from '../Components/Layout';
 import HomeContainer from '../Home/HomeContainer';
 
 const HomePage = () => {
-  return (
-    <Layout>
-      <HomeContainer />
-    </Layout>
-  );
+  return <HomeContainer />;
 };
 
 export default HomePage;
