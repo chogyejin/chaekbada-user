@@ -18,6 +18,9 @@ const Header = () => {
             <li className="right">
               <Link href="/Login">로그인</Link>
             </li>
+            <li className="right">
+              <Link href="/kakaoApi">카카오</Link>
+            </li>
           </ul>
           <div className="top-secondLine">
             <div id="logo">
