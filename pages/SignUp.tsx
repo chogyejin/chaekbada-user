@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import AddressComponent from '../Components/Address';
 import axios from 'axios';
+import { axiosFunction, GUEST_TOKEN } from '../common/utils';
+import router from 'next/router';
+import Cookies from 'universal-cookie';
 
 export default function SignUp() {
   const [email, setEmail] = useState<string>('');
@@ -20,30 +23,27 @@ export default function SignUp() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    const response = await axios.post(
-      'http://localhost:4000/signUp',
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+    const result = await axiosFunction({
+      url: '/signUp',
+      method: 'POST',
+      params: {
+        email,
+        password,
+        name,
+        address: fullAddress,
+        universityID,
+        point,
+        biddingPoint,
+        profileImageUrl,
+        isAuth,
       },
-      {
-        params: {
-          email,
-          password,
-          name,
-          address: fullAddress,
-          universityID,
-          point,
-          biddingPoint,
-          profileImageUrl,
-          isAuth,
-        },
-      },
-    );
+    });
 
-    if (response.status) {
-      console.log(response.data);
+    if (result) {
+      if (result.data) {
+        console.log(result.data);
+        router.push('/');
+      }
     }
   }
 

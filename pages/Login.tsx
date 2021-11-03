@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { axiosFunction } from '../common/utils';
 import Cookies from 'universal-cookie';
 import router from 'next/router';
-import axios from 'axios';
 
 export default function Login() {
   const [email, setEmail] = useState<string>('');
@@ -24,7 +23,7 @@ export default function Login() {
         cookies.set('chaekbadaUserCookie', result.data.token);
         console.log(cookies);
       }
-      // router.push('/');
+      router.push('/');
     }
   }
 
