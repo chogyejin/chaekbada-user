@@ -1,8 +1,9 @@
 import axios from 'axios';
+import router from 'next/router';
 import Cookies from 'universal-cookie';
 
-const GUEST_TOKEN =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Imd1ZXN0Iiwic2NvcGUiOiJndWVzdCIsImlhdCI6MTYzNTI1NzIyN30.Dx-9hfKgtoPYhfEcjlyR4V_S1MSaLYKPizXdkTEzIgs';
+export const GUEST_TOKEN =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imd1ZXN0QGd1ZXN0LmNvbSIsImlhdCI6MTYzNTg3NzgxOCwiaXNzIjoi7Yag7YGwIOuwnOq4ieyekCJ9.1y1sfa0uhjnGMKSjREjSWNTo7RSmHEva5RVufow-ADw';
 
 export const axiosFunction = async (args: {
   url: string;
@@ -12,13 +13,13 @@ export const axiosFunction = async (args: {
   const { url, method, params } = args;
   const cookies = new Cookies();
 
-  const localCookies = cookies.get('factcheck');
+  const localCookies = cookies.get('chaekbadaUserCookie');
   const hasCookies = !!localCookies;
 
   const headers = {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${
-      hasCookies ? cookies.get('factcheck') : GUEST_TOKEN
+      hasCookies ? cookies.get('chaekbadaUserCookie') : GUEST_TOKEN
     }`,
   };
   try {
@@ -26,9 +27,10 @@ export const axiosFunction = async (args: {
       case 'POST': {
         return await axios.post(
           `http://localhost:4000${url}`,
-          { params },
+          {}, //2번째 파라미터는 request.body
           {
-            headers,
+            headers, //headers는 3번째 파라미터
+            params,
           },
         );
 
@@ -58,3 +60,13 @@ export const axiosFunction = async (args: {
     alert('에러');
   }
 };
+
+export function onLogout() {
+  const cookies = new Cookies();
+  cookies.remove('chaekbadaUserCookie');
+  router.push('/');
+}
+
+export function onMoveLoginPage() {
+  router.push('/Login');
+}
