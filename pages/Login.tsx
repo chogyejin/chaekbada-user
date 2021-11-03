@@ -1,10 +1,32 @@
 import React, { useState } from 'react';
+import { axiosFunction } from '../common/utils';
+import Cookies from 'universal-cookie';
+import router from 'next/router';
 
 export default function Login() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  console.log(email, password);
+  async function onLogin(e: React.FormEvent) {
+    e.preventDefault();
+    const result = await axiosFunction({
+      url: '/signIn',
+      method: 'GET',
+      params: { email, password },
+    });
+
+    if (result) {
+      if (result.data) {
+        console.log('됨');
+        console.log(result.data);
+        const cookies = new Cookies();
+        cookies.set('chaekbadaUserCookie', result.data.token);
+        console.log(cookies);
+      }
+      router.push('/');
+    }
+  }
+
   return (
     <div className="loginregister">
       <form>
@@ -33,7 +55,10 @@ export default function Login() {
           />
         </div>
         <div>
-          <button type="submit" className="loginregister__button">
+          <button
+            type="submit"
+            className="loginregister__button"
+            onClick={onLogin}>
             로그인
           </button>
         </div>

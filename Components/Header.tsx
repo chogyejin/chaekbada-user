@@ -1,6 +1,28 @@
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import 'semantic-ui-css/semantic.min.css';
+import Cookies from 'universal-cookie';
+import jwt from 'jsonwebtoken';
+import { onLogout, onMoveLoginPage } from '../common/utils';
+
 const Header = () => {
+  const [isVerifiedToken, setIsVerifiedToken] = useState<boolean>(false);
+
+  useEffect(() => {
+    const cookies = new Cookies();
+    const localCookies = cookies.get('chaekbadaUserCookie');
+    const hasCookies = !!localCookies;
+    if (hasCookies) {
+      setIsVerifiedToken(
+        !!jwt.verify(
+          //확실한 논리연산자 !!
+          localCookies,
+          process.env.NEXT_PUBLIC_JWT_SECRET as string,
+        ),
+      );
+    }
+  }, []);
+
   return (
     <>
       <div className="top">
@@ -15,9 +37,15 @@ const Header = () => {
             <li className="right">
               <Link href="/SignUp">회원가입</Link>
             </li>
-            <li className="right">
-              <Link href="/Login">로그인</Link>
-            </li>
+            {isVerifiedToken ? (
+              <li className="right">
+                <button onClick={onLogout}>로그아웃</button>
+              </li>
+            ) : (
+              <li className="right">
+                <button onClick={onMoveLoginPage}>로그인</button>
+              </li>
+            )}
           </ul>
           <div className="top-secondLine">
             <div id="logo">
