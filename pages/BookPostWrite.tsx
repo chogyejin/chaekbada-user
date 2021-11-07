@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 import BookSearch from '../Components/BookSearch';
+import DatePicker from 'react-datepicker';
+import ko from 'date-fns/locale/ko';
+import 'react-datepicker/dist/react-datepicker.css';
 
 export default function BookPostWrite() {
   const [title, setTitle] = useState<string>('');
@@ -7,6 +10,7 @@ export default function BookPostWrite() {
   const [buyingItNowPrice, setBuyingItNowPrice] = useState<number>(0);
   const [reservePrice, setReservePrice] = useState<number>(0);
   const [contents, setContents] = useState<string>('');
+  const [endDate, setEndDate] = useState<Date>(new Date());
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -21,6 +25,7 @@ export default function BookPostWrite() {
     console.log(title);
     console.log(thumbnail);
   }, [title]);
+
   return (
     <>
       <h1>글 작성하는 페이지</h1>
@@ -45,6 +50,13 @@ export default function BookPostWrite() {
             }}
           />
         </div>
+        <DatePicker
+          locale={ko}
+          dateFormat="yyyy년 MM월 dd일"
+          minDate={new Date()}
+          selected={endDate}
+          onChange={(date: Date) => setEndDate(date)} //params로 toDateString()한 문자열 보내기
+        />
         <div>
           <textarea
             style={{ width: '500px', height: '300px' }}
