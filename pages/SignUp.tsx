@@ -19,9 +19,18 @@ export default function SignUp() {
   const [address, setAddress] = useState<string>('');
   const [fullAddress, setFullAddress] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
+ 
 
+ 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if( email==="" || password===""||passwordCheck===""||name===""||universityID===""||address===""||fullAddress===""){
+      alert("입력되지 않은 값이 있습니다.");
+    }
+ 
+    else if(password!==passwordCheck){
+      alert("비밀번호와 비밀번호 재입력값이 다릅니다.")
+    }
 
     const result = await axiosFunction({
       url: '/signUp',
@@ -75,7 +84,7 @@ export default function SignUp() {
                 setEmail(event.target.value);
               }}
             />
-            <button style={{ width: '100px', height: '50px' }}>
+            <button  style={{ width: '100px', height: '50px' }}>
               중복 확인
             </button>
           </div>
@@ -167,7 +176,7 @@ export default function SignUp() {
             />
           </div>
 
-          <button className="loginregister__button">회원가입</button>
+          <button onClick={onSubmit} className="loginregister__button">회원가입</button>
         </form>
       </div>
       <style jsx>
@@ -199,3 +208,4 @@ export default function SignUp() {
     </>
   );
 }
+

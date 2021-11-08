@@ -1,16 +1,50 @@
-import Link from 'next/link';
-import Head from 'next/head';
 
-export default function BookPosts() {
-  return (
-    <>
-      <Head>
-        <title>전체 책</title>
-      </Head>
+import React, { Component, useState } from "react";
+import axios from "axios";
+import Listpage from "./lp";
 
-      <h1 style={{ marginBlockStart: '0px' }}>전체 책 페이지</h1>
 
-      {/* <style jsx></style> */}
-    </>
-  );
+class BookPosts extends Component {
+  
+  state = {
+    loading: false,
+    ItemList: [] 
+  };
+
+  loadItem = async () => {
+    
+    axios 
+      .get("./SearchJson.json")
+      .then(({ data }) => {
+        
+        this.setState({
+          loading: true, 
+          ItemList: data.Item 
+        });
+      })
+      .catch(e => {
+        
+        console.error(e); 
+        this.setState({
+          loading: false 
+        });
+      });
+  };
+
+  componentDidMount() {
+    this.loadItem();
+  }
+
+
+  render() {
+    const { ItemList } = this.state;
+    console.log(ItemList);
+    return (
+      <div>
+        <Listpage Itemcard={ItemList} />
+      </div>
+    );
+  }
 }
+
+export default BookPosts;
