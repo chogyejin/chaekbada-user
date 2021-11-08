@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import AddressComponent from '../Components/Address';
 import { axiosFunction } from '../common/utils';
 import router from 'next/router';
+import axios from 'axios';
 
 export default function SignUp() {
   const [email, setEmail] = useState<string>('');
@@ -17,6 +18,7 @@ export default function SignUp() {
   const [address, setAddress] = useState<string>('');
   const [fullAddress, setFullAddress] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [checkedEmail, setCheckedEmail] = useState<boolean>(false);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -55,6 +57,23 @@ export default function SignUp() {
     setIsOpen(false);
   }
 
+  async function checkEmail() {
+    const result = await axiosFunction({
+      url: '/signUp/email-check',
+      method: 'GET',
+      params: {
+        email,
+      },
+    });
+
+    if (result!.data) {
+      setCheckedEmail(true);
+      alert('해당 이메일 사용 가능');
+    } else {
+      alert('다른 이메일 입력하세요');
+    }
+  }
+
   return (
     <>
       <div className="loginregister">
@@ -73,7 +92,10 @@ export default function SignUp() {
                 setEmail(event.target.value);
               }}
             />
-            <button type="button" style={{ width: '100px', height: '50px' }}>
+            <button
+              type="button"
+              style={{ width: '100px', height: '50px' }}
+              onClick={checkEmail}>
               중복 확인
             </button>
           </div>
@@ -165,8 +187,20 @@ export default function SignUp() {
               }}
             />
           </div>
-
-          <button className="loginregister__button">회원가입</button>
+          {email &&
+          password &&
+          passwordCheck &&
+          name &&
+          universityID &&
+          address &&
+          fullAddress &&
+          checkedEmail ? (
+            <button className="loginregister__button">회원가입</button>
+          ) : (
+            <button disabled className="loginregister__button_disabled">
+              회원가입
+            </button>
+          )}
         </form>
       </div>
       <style jsx>
@@ -185,6 +219,16 @@ export default function SignUp() {
             border-radius: 10px;
           }
           .loginregister__button {
+            background-color: rgb(248, 47, 98);
+            color: rgb(255, 255, 255);
+            font-weight: 700;
+            width: 100%;
+            border-radius: 40px;
+            height: 48px;
+            margin-top: 10px;
+          }
+          .loginregister__button_disabled {
+            opacity: 0.3;
             background-color: rgb(248, 47, 98);
             color: rgb(255, 255, 255);
             font-weight: 700;
