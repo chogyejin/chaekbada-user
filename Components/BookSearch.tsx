@@ -67,9 +67,9 @@ export default function BookSearch({ getData }: Props) {
       />
       <button onClick={() => onSearch(bookName)}>책 찾기</button>
       {isOpen && (
-        <div>
-          {books.map((book) => (
-            <div>
+        <div style={{ display: 'flex', paddingTop: '20px' }}>
+          {books.map((book, id) => (
+            <div key={id} style={{ marginLeft: '20px' }}>
               <img
                 src={book.thumbnail}
                 onClick={() => {
@@ -77,7 +77,7 @@ export default function BookSearch({ getData }: Props) {
                   setIsOpen(false);
                 }}
               />
-              <div>{book.title}</div>
+              <div>{book.title.slice(0, 10)}</div>
             </div>
           ))}
         </div>

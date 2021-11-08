@@ -26,6 +26,9 @@ export default function BookPostWrite() {
     console.log(thumbnail);
   }, [title]);
 
+  console.log(endDate);
+  console.log(typeof endDate);
+  console.log(endDate.toDateString());
   return (
     <>
       <h1>글 작성하는 페이지</h1>
@@ -59,13 +62,17 @@ export default function BookPostWrite() {
         />
         <div>
           <textarea
-            style={{ width: '500px', height: '300px' }}
+            style={{ width: '500px', height: '300px', resize: 'none' }}
             placeholder="글 내용"
             onChange={(event) => {
               setContents(event.target.value);
             }}></textarea>
         </div>
-        <button>작성</button>
+        {title && buyingItNowPrice && reservePrice && contents && endDate ? (
+          <button>작성</button>
+        ) : (
+          <button disabled>작성</button>
+        )}
       </form>
     </>
   );

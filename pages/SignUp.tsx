@@ -1,9 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import AddressComponent from '../Components/Address';
-import axios from 'axios';
-import { axiosFunction, GUEST_TOKEN } from '../common/utils';
+import { axiosFunction } from '../common/utils';
 import router from 'next/router';
-import Cookies from 'universal-cookie';
 
 export default function SignUp() {
   const [email, setEmail] = useState<string>('');
@@ -75,7 +73,7 @@ export default function SignUp() {
                 setEmail(event.target.value);
               }}
             />
-            <button style={{ width: '100px', height: '50px' }}>
+            <button type="button" style={{ width: '100px', height: '50px' }}>
               중복 확인
             </button>
           </div>
@@ -147,6 +145,7 @@ export default function SignUp() {
             />
             <button
               style={{ width: '100px', height: '50px' }}
+              type="button"
               onClick={openPopup}>
               주소 찾기
             </button>
