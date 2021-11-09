@@ -2,12 +2,8 @@ import Head from 'next/head';
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import Layout from '../Components/Layout';
-// process.env.NEXT_PUBLIC_JWT_SECRET
-// import Cookies from 'universal-cookie';
 
-// const cookies = new Cookies();
 
-// console.log(cookies);
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
