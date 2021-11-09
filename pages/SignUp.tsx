@@ -219,7 +219,7 @@ export default function SignUp() {
             border-radius: 10px;
           }
           .loginregister__button {
-            background-color: rgb(248, 47, 98);
+            background-color: #cc99ff;
             color: rgb(255, 255, 255);
             font-weight: 700;
             width: 100%;
@@ -229,7 +229,7 @@ export default function SignUp() {
           }
           .loginregister__button_disabled {
             opacity: 0.3;
-            background-color: rgb(248, 47, 98);
+            background-color: #cc99ff;
             color: rgb(255, 255, 255);
             font-weight: 700;
             width: 100%;

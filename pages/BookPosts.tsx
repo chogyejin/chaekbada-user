@@ -2,7 +2,6 @@ import Link from 'next/link';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { axiosFunction } from '../common/utils';
-import axios from 'axios';
 
 interface IBookPosts {
   thumbnail: string;
@@ -52,16 +51,31 @@ export default function BookPosts() {
         <title>전체 책</title>
       </Head>
 
-      <h1 style={{ marginBlockStart: '0px' }}>전체 책 페이지</h1>
-      <div style={{ paddingTop: '20px' }}>
+      <h1 style={{ marginBlockStart: '0px', textAlign: 'center' }}>
+        전체 책 게시물이 있는 페이지
+      </h1>
+      <div style={{ paddingTop: '20px', alignItems: 'center' }}>
         {bookPosts.map((bookpost, id) => (
-          <div key={id} style={{ marginLeft: '20px' }}>
-            {bookpost.thumbnail} {bookpost.bidPrice} {bookpost.buyingItNowPrice}
-            {bookpost.endDate} {bookpost.userID}
+          <div
+            key={id}
+            style={{
+              marginLeft: '20px',
+              marginBottom: '20px',
+              display: 'flex',
+            }}>
+            <img src={bookpost.thumbnail} />
+            <div style={{}}>
+              <div>현재 입찰가 : {bookpost.bidPrice}</div>
+              <div>즉시 구매가 : {bookpost.buyingItNowPrice}</div>
+              <div>마감 기한 : {bookpost.endDate.toString().slice(0, 10)}</div>
+              <div>판매자 :{bookpost.userID}</div>
+            </div>
           </div>
         ))}
       </div>
-      <Link href="/BookPostWrite">글 작성 페이지로 가자</Link>
+      <div style={{ textAlign: 'center', fontSize: '20px' }}>
+        <Link href="/BookPostWrite">글 작성하기</Link>
+      </div>
       {/* <style jsx></style> */}
     </>
   );
