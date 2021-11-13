@@ -38,50 +38,6 @@ export default function BookSearch({ getData }: Props) {
   const [salePrice, setSalePrice] = useState<number>(0);
   const [thumbnail, setThumbnail] = useState<string>('');
 
-  // async function makeBook() {
-  //   if (
-  //     title &&
-  //     isbn &&
-  //     datetime !== new Date() &&
-  //     authors !== [] &&
-  //     publisher &&
-  //     price &&
-  //     salePrice &&
-  //     thumbnail
-  //   ) {
-  //     console.log(
-  //       '타이틀 ' + title + '\n',
-  //       'isbn ' + isbn + '\n',
-  //       'datetime ' + datetime + '\n',
-  //       'authors ' + authors + '\n',
-  //       'publisher ' + publisher + '\n',
-  //       'price ' + price + '\n',
-  //       'salePrice ' + salePrice + '\n',
-  //       'thumbnail ' + thumbnail + '\n',
-  //     );
-  //     const result = await axiosFunction({
-  //       url: '/bookPost/isBookinDB',
-  //       method: 'POST',
-  //       params: {
-  //         title,
-  //         isbn,
-  //         datetime,
-  //         authors,
-  //         publisher,
-  //         price,
-  //         salePrice,
-  //         thumbnail,
-  //       },
-  //     });
-
-  //     if (result) {
-  //       if (result.data) {
-  //         console.log('돌아온 데이터 ' + result.data);
-  //       }
-  //     }
-  //   }
-  // }
-
   useEffect(() => {
     console.log(
       '타이틀 ' + title + '\n',

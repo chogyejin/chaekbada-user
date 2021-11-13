@@ -16,7 +16,7 @@ export default function BookPosts() {
   const [isFirstLoad, setIsFirstLoad] = useState<Boolean>(true);
 
   useEffect(() => {
-    async function getPost() {
+    async function getPosts() {
       const result = await axiosFunction({
         url: '/bookPostList/new',
         method: 'GET',
@@ -41,7 +41,7 @@ export default function BookPosts() {
         }
       }
     }
-    getPost();
+    getPosts();
   }, [bookPosts]);
 
   console.log(bookPosts);
@@ -54,6 +54,9 @@ export default function BookPosts() {
       <h1 style={{ marginBlockStart: '0px', textAlign: 'center' }}>
         전체 책 게시물이 있는 페이지
       </h1>
+
+      <Link href="/BookPostDetail">글 상세 페이지</Link>
+
       <div style={{ paddingTop: '20px', alignItems: 'center' }}>
         {bookPosts.map((bookpost, id) => (
           <div
@@ -63,6 +66,7 @@ export default function BookPosts() {
               marginBottom: '20px',
               display: 'flex',
             }}>
+            {/* <Link href="/BookPostDetail"> */}
             <img src={bookpost.thumbnail} />
             <div style={{}}>
               <div>현재 입찰가 : {bookpost.bidPrice}</div>
@@ -70,6 +74,7 @@ export default function BookPosts() {
               <div>마감 기한 : {bookpost.endDate.toString().slice(0, 10)}</div>
               <div>판매자 :{bookpost.userID}</div>
             </div>
+            {/* </Link> */}
           </div>
         ))}
       </div>

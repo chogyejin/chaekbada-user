@@ -67,9 +67,6 @@ export default function BookPostWrite() {
     console.log(thumbnail);
   }, [title]);
 
-  // console.log(endDate);
-  // console.log(typeof endDate);
-  // console.log(endDate.toDateString());
   return (
     <>
       <h1 style={{ textAlign: 'center' }}>글 작성하는 페이지</h1>
