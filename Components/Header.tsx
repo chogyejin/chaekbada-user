@@ -5,6 +5,7 @@ import Cookies from "universal-cookie";
 import jwt from "jsonwebtoken";
 import { onLogout, onMoveLoginPage } from "../common/utils";
 import { Button } from "reactstrap";
+import React from "react";
 
 const Header = () => {
   const [isVerifiedToken, setIsVerifiedToken] = useState<boolean>(false);
@@ -21,8 +22,10 @@ const Header = () => {
           process.env.NEXT_PUBLIC_JWT_SECRET as string
         )
       );
+    } else {
+      setIsVerifiedToken(false);
     }
-  }, []);
+  });
 
   return (
     <>
@@ -31,33 +34,57 @@ const Header = () => {
           <ul className="top-menu">
             <li className="left">
               <Link href="/BookPosts">
-                <span style={{ color: "white" }}>전체 책</span>
+                <span style={{ color: "white", cursor: "pointer" }}>
+                  전체 책
+                </span>
               </Link>
             </li>
             <li className="left">
               <Link href="/SolutionPosts">
-                <span style={{ color: "white" }}>솔루션 게시판</span>
+                <span style={{ color: "white", cursor: "pointer" }}>
+                  솔루션 게시판
+                </span>
               </Link>
             </li>
-            <li className="right">
-              <Link href="/SignUp">
-                <span style={{ color: "white" }}>회원가입</span>
-              </Link>
-            </li>
+
             {isVerifiedToken ? (
-              <li className="right">
-                <div onClick={onLogout}>로그아웃</div>
-              </li>
+              <React.Fragment>
+                <li className="right">
+                  <div style={{ cursor: "pointer" }} onClick={onLogout}>
+                    로그아웃
+                  </div>
+                </li>
+                <li className="right">
+                  <Link href="/Mypage">
+                    <span style={{ color: "white", cursor: "pointer" }}>
+                      마이페이지
+                    </span>
+                  </Link>
+                </li>
+              </React.Fragment>
             ) : (
-              <li className="right">
-                <div onClick={onMoveLoginPage}>로그인</div>
-              </li>
+              <React.Fragment>
+                <li className="right">
+                  <Link href="/SignUp">
+                    <span style={{ color: "white", cursor: "pointer" }}>
+                      회원가입
+                    </span>
+                  </Link>
+                </li>
+                <li className="right">
+                  <div style={{ cursor: "pointer" }} onClick={onMoveLoginPage}>
+                    로그인
+                  </div>
+                </li>
+              </React.Fragment>
             )}
           </ul>
           <div className="top-secondLine">
             <div id="logo">
               <Link href="/">
-                <span style={{ color: "#FF6600" }}>CHAECKBADA</span>
+                <span style={{ color: "#FF6600", cursor: "pointer" }}>
+                  CHAECKBADA
+                </span>
               </Link>
             </div>
             <div className="ui icon input" id="search">
@@ -79,7 +106,7 @@ const Header = () => {
           }
           .wrapper {
             margin: 0 auto;
-            width: 1100px;
+            width: 1320px;
           }
           .top-menu {
             display: inline;

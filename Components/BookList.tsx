@@ -33,7 +33,7 @@ export default function BookList({ list }: Props) {
                 <div>
                   마감 기한 : {bookpost.endDate.toString().slice(0, 10)}
                 </div>
-                <div>판매자 :{}</div>
+                <div>판매자 :{bookpost.userID}</div>
                 <div>
                   <button onClick={interest(bookpost.id)}>찜</button>
                 </div>
