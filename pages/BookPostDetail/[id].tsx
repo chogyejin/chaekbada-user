@@ -16,10 +16,12 @@ export interface IBook {
   bookImageUrl: string;
   isActive: boolean;
   thumbnail: string;
+  user: {
+    name: string;
+  };
 }
 
 export default function BookPost() {
-  const [isFirstLoad, setIsFirstLoad] = useState<boolean>(true);
   const [book, setBook] = useState<IBook>({
     title: '',
     bookID: '',
@@ -33,16 +35,15 @@ export default function BookPost() {
     bookImageUrl: '',
     isActive: true,
     thumbnail: '',
+    user: {
+      name: '',
+    },
   });
 
   const router = useRouter();
   const { id } = router.query;
   const bookPostID = id;
 
-  //   useEffect(() => {
-  //     console.log('첫번째 useEffect ' + id);
-  //     setBookPostID(id as string);
-  //   }, []);
   useEffect(() => {
     if (!bookPostID) {
       return;
@@ -56,25 +57,22 @@ export default function BookPost() {
       });
       if (result) {
         if (result.data) {
-          if (isFirstLoad) {
-            setIsFirstLoad(false);
-            setBook(result.data);
-            console.log(result.data);
-          }
+          setBook(result.data);
+          console.log(result.data);
         } else {
           console.log('실패');
         }
       }
     }
     getPost();
+    console.log(book.user.name);
   }, [bookPostID]);
 
   return (
     <>
       <div>
-        <div>상세 페이지 {bookPostID}</div>
-         <Book book={book} />
-        <div>{book.contents}</div>
+        <h1>상세 페이지</h1>
+        <Book book={book} />
       </div>
     </>
   );

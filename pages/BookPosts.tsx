@@ -11,6 +11,9 @@ export interface IBookPosts {
   buyingItNowPrice: number;
   endDate: Date;
   userID: string;
+  user: {
+    name: string;
+  };
 }
 
 export default function BookPosts() {
@@ -25,7 +28,6 @@ export default function BookPosts() {
         params: {},
       });
 
-
       if (result) {
         if (result.data) {
           const existsPosts = result.data.length > 0;
@@ -33,13 +35,16 @@ export default function BookPosts() {
             setIsFirstLoad(false);
             setBookPosts(result.data || []);
           }
+          console.log(result.data);
         } else {
+          console.log('안 넘어옴');
         }
       }
     }
     getPosts();
   }, [bookPosts]);
 
+  console.log(bookPosts);
   return (
     <>
       <Head>
