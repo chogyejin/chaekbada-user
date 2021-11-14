@@ -43,26 +43,20 @@ export default function BookPost() {
   //     console.log('첫번째 useEffect ' + id);
   //     setBookPostID(id as string);
   //   }, []);
-  console.log('밖');
-  console.log(book);
   useEffect(() => {
-    console.log('useEffect 1');
     if (!bookPostID) {
       return;
     }
 
     async function getPost() {
-      console.log('useEffect 2');
       const result = await axiosFunction({
         url: '/bookPost/post',
         method: 'GET',
         params: { bookPostID },
       });
-
       if (result) {
         if (result.data) {
-          const existsPosts = result.data.length > 0;
-          if (isFirstLoad && existsPosts) {
+          if (isFirstLoad) {
             setIsFirstLoad(false);
             setBook(result.data);
             console.log(result.data);
@@ -79,7 +73,7 @@ export default function BookPost() {
     <>
       <div>
         <div>상세 페이지 {bookPostID}</div>
-        {/* <Book book={book} /> */}
+         <Book book={book} />
         <div>{book.contents}</div>
       </div>
     </>
