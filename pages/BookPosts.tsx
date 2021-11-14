@@ -25,12 +25,7 @@ export default function BookPosts() {
         params: {},
       });
 
-      // if (result) {
-      //   if (result.data) {
-      //     console.log(result.data);
-      //     setBookPosts(result.data);
-      //   }
-      // }
+
       if (result) {
         if (result.data) {
           const existsPosts = result.data.length > 0;
@@ -39,14 +34,12 @@ export default function BookPosts() {
             setBookPosts(result.data || []);
           }
         } else {
-          console.log('실패');
         }
       }
     }
     getPosts();
   }, [bookPosts]);
 
-  console.log(bookPosts);
   return (
     <>
       <Head>

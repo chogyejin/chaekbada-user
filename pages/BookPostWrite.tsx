@@ -15,20 +15,23 @@ export default function BookPostWrite() {
   const [reservePrice, setReservePrice] = useState<number>(0);
   const [contents, setContents] = useState<string>('');
   const [endDate, setEndDate] = useState<Date>(new Date());
-  const [decodedEmail, setDecodedEmail] = useState<string>('');
+  const [decodedID, setDecodedID] = useState<string>('');
+  const [bookID, setBookID] = useState<string>("");
 
   useEffect(() => {
     const cookies = new Cookies();
     const localCookies = cookies.get('chaekbadaUserCookie');
-    const decodedEmail = jwt.verify(
+    const decodedToken = jwt.verify(
       localCookies,
       process.env.NEXT_PUBLIC_JWT_SECRET as string,
     ) as any;
-    setDecodedEmail(decodedEmail.email);
+    console.log("얍얍")
+    console.log(decodedToken)
+    console.log("얍얍")
+    setDecodedID(decodedToken.id);
   }, []);
 
-  // console.log(localCookies);
-  // console.log(typeof decodedEmail.email);
+
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -37,10 +40,10 @@ export default function BookPostWrite() {
       url: '/bookPost/write',
       method: 'POST',
       params: {
-        bookID: '',
+        bookID,
         title,
         contents,
-        userID: decodedEmail,
+        userID: decodedID,
         endDate,
         reservePrice,
         buyingItNowPrice,
@@ -51,10 +54,14 @@ export default function BookPostWrite() {
 
     if (result) {
       if (result.data) {
-        console.log(result.data);
         router.push('/BookPosts');
       }
     }
+  }
+
+  function getBookID(bookID: string) {
+
+    setBookID(bookID)
   }
 
   function getData(title: string, thumbnail: string) {
@@ -63,8 +70,7 @@ export default function BookPostWrite() {
   }
 
   useEffect(() => {
-    console.log(title);
-    console.log(thumbnail);
+
   }, [title]);
 
   return (
@@ -72,7 +78,7 @@ export default function BookPostWrite() {
       <h1 style={{ textAlign: 'center' }}>글 작성하는 페이지</h1>
       <form onSubmit={onSubmit}>
         <div>
-          <BookSearch getData={getData} />
+          <BookSearch getData={getData} getBookID={getBookID}/>
         </div>
         <div>책 제목</div>
         <div>{title}</div>
