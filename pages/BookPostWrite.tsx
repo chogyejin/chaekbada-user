@@ -14,9 +14,11 @@ export default function BookPostWrite() {
   const [buyingItNowPrice, setBuyingItNowPrice] = useState<number>(0);
   const [reservePrice, setReservePrice] = useState<number>(0);
   const [contents, setContents] = useState<string>('');
-  const [endDate, setEndDate] = useState<Date>(new Date());
+  const [endDate, setEndDate] = useState<Date>(
+    new Date(new Date().toDateString() + ' ' + '23:59:59'),
+  );
   const [decodedID, setDecodedID] = useState<string>('');
-  const [bookID, setBookID] = useState<string>("");
+  const [bookID, setBookID] = useState<string>('');
 
   useEffect(() => {
     const cookies = new Cookies();
@@ -25,13 +27,8 @@ export default function BookPostWrite() {
       localCookies,
       process.env.NEXT_PUBLIC_JWT_SECRET as string,
     ) as any;
-    console.log("얍얍")
-    console.log(decodedToken)
-    console.log("얍얍")
     setDecodedID(decodedToken.id);
   }, []);
-
-
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -60,8 +57,7 @@ export default function BookPostWrite() {
   }
 
   function getBookID(bookID: string) {
-
-    setBookID(bookID)
+    setBookID(bookID);
   }
 
   function getData(title: string, thumbnail: string) {
@@ -70,15 +66,15 @@ export default function BookPostWrite() {
   }
 
   useEffect(() => {
-
-  }, [title]);
+    console.log(new Date(endDate.toDateString() + ' ' + '23:59:59'));
+  }, [endDate]);
 
   return (
     <>
       <h1 style={{ textAlign: 'center' }}>글 작성하는 페이지</h1>
       <form onSubmit={onSubmit}>
         <div>
-          <BookSearch getData={getData} getBookID={getBookID}/>
+          <BookSearch getData={getData} getBookID={getBookID} />
         </div>
         <div>책 제목</div>
         <div>{title}</div>
@@ -106,7 +102,9 @@ export default function BookPostWrite() {
             dateFormat="yyyy년 MM월 dd일"
             minDate={new Date()}
             selected={endDate}
-            onChange={(date: Date) => setEndDate(date)} //params로 toDateString()한 문자열 보내기
+            onChange={(date: Date) =>
+              setEndDate(new Date(date.toDateString() + ' ' + '23:59:59'))
+            }
           />
         </div>
         <div>
