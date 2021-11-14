@@ -106,7 +106,7 @@ const Header = () => {
           }
           .wrapper {
             margin: 0 auto;
-            width: 1100px;
+            width: 1320px;
           }
           .top-menu {
             display: inline;
