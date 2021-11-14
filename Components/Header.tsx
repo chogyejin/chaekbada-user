@@ -21,8 +21,10 @@ const Header = () => {
           process.env.NEXT_PUBLIC_JWT_SECRET as string
         )
       );
+    }else{
+      setIsVerifiedToken(false)
     }
-  }, []);
+  });
 
   return (
     <>
