@@ -1,5 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Button, Nav, NavLink, NavItem } from "reactstrap";
+import {
+  Button,
+  Nav,
+  NavLink,
+  NavItem,
+  TabContent,
+  TabPane,
+  Row,
+  Col,
+  Card,
+  CardText,
+  CardTitle,
+} from "reactstrap";
 import axios from "axios";
 import { axiosFunction } from "../common/utils";
 import Cookies from "universal-cookie";
@@ -31,6 +43,7 @@ export default () => {
     profileImageUrl: "",
     isAuth: true,
   });
+  const [activeTab, setActieTab] = useState<string>("1");
 
   useEffect(() => {
     async function getUser() {
@@ -55,6 +68,10 @@ export default () => {
 
     getUser();
   }, []);
+
+  const setActiveTab = (id: string) => () => {
+    setActieTab(id);
+  };
 
   return (
     <div className="global-container">
@@ -97,20 +114,21 @@ export default () => {
       </div>
       <Nav tabs>
         <NavItem>
-          <NavLink active href="#">
-            Link
-          </NavLink>
+          <NavLink onClick={setActiveTab("1")}>관심글</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="#">Link</NavLink>
+          <NavLink onClick={setActiveTab("2")}>구매 목록</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="#">Link</NavLink>
-        </NavItem>{" "}
-        <NavItem>
-          <NavLink href="#">Link</NavLink>
+          <NavLink onClick={setActiveTab("3")}>입찰 참여 목록</NavLink>
         </NavItem>
       </Nav>
+
+      <TabContent activeTab={activeTab}>
+        <TabPane tabId="1">나는 관심글 탭</TabPane>
+        <TabPane tabId="2">나는 구매 목록 탭</TabPane>
+        <TabPane tabId="3">입찰 참여 목록 탭</TabPane>
+      </TabContent>
 
       <style jsx>{`
         .user-info-container {
