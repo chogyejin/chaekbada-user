@@ -106,6 +106,7 @@ export default () => {
               marginTop: "16px",
               backgroundColor: "rgba(0, 0, 0, 0.9)",
               color: "#FF6600",
+              border: "none",
             }}
           >
             내 정보 수정
@@ -134,7 +135,7 @@ export default () => {
         .user-info-container {
           padding: 24px;
           border: 1px solid black;
-          margin: 16px;
+          margin: 16px 0px;
           border-radius: 12px;
           max-width: 500px;
         }
