@@ -9,7 +9,7 @@ export default function SignUp() {
   const [password, setPassword] = useState<string>('');
   const [passwordCheck, setPasswordCheck] = useState<string>('');
   const [name, setName] = useState<string>('');
-  const [universityID, setUniversityID] = useState<string>('');
+  const [universityName, setUniversityName] = useState<string>('');
   //포인트, 비딩포인트, 프로필url, isAuth는 임시
   const point = 0;
   const biddingPoint = 0;
@@ -31,7 +31,7 @@ export default function SignUp() {
         password,
         name,
         address: fullAddress,
-        universityID,
+        universityName,
         point,
         biddingPoint,
         profileImageUrl,
@@ -41,7 +41,6 @@ export default function SignUp() {
 
     if (result) {
       if (result.data) {
-        console.log(result.data);
         router.push('/');
       }
     }
@@ -151,9 +150,9 @@ export default function SignUp() {
               type="text"
               placeholder="학교 입력"
               // ref={school_nameRef}
-              value={universityID}
+              value={universityName}
               onChange={(event) => {
-                setUniversityID(event.target.value);
+                setUniversityName(event.target.value);
               }}
             />
           </div>
@@ -191,7 +190,7 @@ export default function SignUp() {
           password &&
           passwordCheck &&
           name &&
-          universityID &&
+          universityName &&
           address &&
           fullAddress &&
           checkedEmail ? (

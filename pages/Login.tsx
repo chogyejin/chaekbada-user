@@ -17,11 +17,8 @@ export default function Login() {
 
     if (result) {
       if (result.data) {
-        console.log("됨");
-        console.log(result.data);
         const cookies = new Cookies();
         cookies.set("chaekbadaUserCookie", result.data.token);
-        console.log(cookies);
       }
       router.push("/");
     }

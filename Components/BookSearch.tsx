@@ -12,6 +12,7 @@ const Kakao = axios.create({
 
 interface Props {
   getData: (title: string, thumbnail: string) => void;
+  getBookID: (bookID: string) => void;
 }
 
 interface IBook {
@@ -25,7 +26,7 @@ interface IBook {
   thumbnail: string;
 }
 
-export default function BookSearch({ getData }: Props) {
+export default function BookSearch({ getData, getBookID }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [bookName, setBookName] = useState<string>('');
   const [books, setBooks] = useState<IBook[]>([]);
@@ -39,16 +40,7 @@ export default function BookSearch({ getData }: Props) {
   const [thumbnail, setThumbnail] = useState<string>('');
 
   useEffect(() => {
-    console.log(
-      '타이틀 ' + title + '\n',
-      'isbn ' + isbn + '\n',
-      'datetime ' + datetime + '\n',
-      'authors ' + authors + '\n',
-      'publisher ' + publisher + '\n',
-      'price ' + price + '\n',
-      'salePrice ' + salePrice + '\n',
-      'thumbnail ' + thumbnail + '\n',
-    );
+
     async function makeBook() {
       const result = await axiosFunction({
         url: '/bookPost/isBookinDB',
@@ -67,7 +59,8 @@ export default function BookSearch({ getData }: Props) {
 
       if (result) {
         if (result.data) {
-          console.log('돌아온 데이터 ' + result.data);
+
+          getBookID(result.data.id)
         }
       }
     }
