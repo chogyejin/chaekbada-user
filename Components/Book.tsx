@@ -21,9 +21,23 @@ export default function Book({ book }: Props) {
     thumbnail,
   } = book;
   const { name } = book.user;
-  const [offerdPrice, setOfferdPrice] = useState<number>(0);
+  const [offeredPrice, setOfferdPrice] = useState<number>(0);
 
-  console.log(book);
+  function onBid() {
+    if (bidPrice == 0) {
+      if (offeredPrice <= reservePrice) {
+        alert('더 높은 입찰 가격을 입력하세요');
+      } else {
+        console.log('입찰1');
+      }
+    } else {
+      if (offeredPrice <= bidPrice) {
+        alert('더 높은 입찰가격을 입력하세요');
+      } else {
+        console.log('입찰2');
+      }
+    }
+  }
   return (
     <>
       <div
@@ -41,19 +55,32 @@ export default function Book({ book }: Props) {
             </div>
           </div>
           <div>
-            <div>현재 입찰가 : {bidPrice}</div>
+            <div>
+              현재 입찰가 :
+              {bidPrice == 0 ? <>입찰한 사람 없음</> : <>{bidPrice}</>}
+            </div>
             <div>
               <div>
                 <input
                   type="text"
                   placeholder="입찰 희망가 입력..."
                   onChange={(event) => {
-                    console.log(Number(event.target.value));
+                    setOfferdPrice(Number(event.target.value));
                   }}
                 />
               </div>
               <div>
-                <button>입찰하기</button>
+                현재 입찰가 :
+                {bidPrice == 0 ? (
+                  <>현재 최저 경매가는 {reservePrice}입니다</>
+                ) : (
+                  <>{bidPrice}보다 높은 가격 입력하세요</>
+                )}
+              </div>
+              <div>
+                <button type="button" onClick={onBid}>
+                  입찰하기
+                </button>
               </div>
             </div>
           </div>
