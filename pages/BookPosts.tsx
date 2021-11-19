@@ -44,7 +44,6 @@ export default function BookPosts() {
     getPosts();
   }, [bookPosts]);
 
-  console.log(bookPosts);
   return (
     <>
       <Head>

@@ -42,7 +42,7 @@ export default function BookPost() {
 
   const router = useRouter();
   const { id } = router.query;
-  const bookPostID = id;
+  const bookPostID = id as string;
 
   useEffect(() => {
     if (!bookPostID) {
@@ -65,14 +65,13 @@ export default function BookPost() {
       }
     }
     getPost();
-    console.log(book.user.name);
   }, [bookPostID]);
 
   return (
     <>
       <div>
         <h1>상세 페이지</h1>
-        <Book book={book} />
+        <Book book={book} bookPostID={bookPostID} />
       </div>
     </>
   );
