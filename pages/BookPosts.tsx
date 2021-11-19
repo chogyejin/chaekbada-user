@@ -6,6 +6,7 @@ import BookList from '../Components/BookList';
 
 export interface IBookPosts {
   id: string;
+  title: string;
   thumbnail: string;
   bidPrice: number;
   buyingItNowPrice: number;

@@ -30,6 +30,7 @@ export default function BookList({ list }: Props) {
               <div style={{ display: 'flex' }}>
                 <img src={bookpost.thumbnail} />
                 <div style={{ display: 'grid', alignItems: 'center' }}>
+                  <div>책 이름 : {bookpost.title}</div>
                   <div>현재 입찰가 : {bookpost.bidPrice}</div>
                   <div>즉시 구매가 : {bookpost.buyingItNowPrice}</div>
                   <div>
