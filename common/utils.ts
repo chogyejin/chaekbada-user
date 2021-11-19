@@ -47,11 +47,10 @@ export const axiosFunction = async (args: {
       case 'PUT': {
         return await axios.put(
           `http://localhost:4000${url}`,
-          {
-            params,
-          },
+          {},
           {
             headers,
+            params,
           },
         );
       }
