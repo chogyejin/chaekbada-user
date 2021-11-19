@@ -95,10 +95,14 @@ export default function Book({ book, bookPostID }: Props) {
           marginBottom: '20px',
           display: 'flex',
         }}>
-        <img src={book.thumbnail} />
         <div>
-          <div>
-            <div>즉시 구매가 : {buyingItNowPrice}</div>
+          <img src={book.thumbnail} style={{ width: '200px' }} />
+        </div>
+        <div style={{ fontSize: '20px' }}>
+          <div style={{ display: 'flex' }}>
+            <div style={{ marginRight: '20px' }}>
+              즉시 구매가 : {buyingItNowPrice}
+            </div>
             <div>
               <button>즉시 구매하기</button>
             </div>
@@ -109,14 +113,21 @@ export default function Book({ book, bookPostID }: Props) {
               {bidPrice == 0 ? <>입찰한 사람 없음</> : <>{bidPrice}</>}
             </div>
             <div>
-              <div>
-                <input
-                  type="text"
-                  placeholder="입찰 희망가 입력..."
-                  onChange={(event) => {
-                    setOfferdPrice(Number(event.target.value));
-                  }}
-                />
+              <div style={{ display: 'flex' }}>
+                <div style={{ marginRight: '20px' }}>
+                  <input
+                    type="text"
+                    placeholder="입찰 희망가 입력..."
+                    onChange={(event) => {
+                      setOfferdPrice(Number(event.target.value));
+                    }}
+                  />
+                </div>
+                <div>
+                  <button type="button" onClick={onBid}>
+                    입찰하기
+                  </button>
+                </div>
               </div>
               <div>
                 {bidPrice == 0 ? (
@@ -125,19 +136,14 @@ export default function Book({ book, bookPostID }: Props) {
                   <>{bidPrice}보다 높은 가격 입력하세요</>
                 )}
               </div>
-              <div>
-                <button type="button" onClick={onBid}>
-                  입찰하기
-                </button>
-              </div>
             </div>
           </div>
 
-          <div>마감 기한 : {endDate.toString().slice(0, 10)}</div>
-          <div>판매자 :{name}</div>
-          <div>글 내용 : {contents}</div>
+          <div>마감 기한 : {endDate.toString().slice(0, 10)} 23:59:59</div>
+          <div>판매자 : {name}</div>
         </div>
       </div>
+      <div>글 내용 : {contents}</div>
     </>
   );
 }
