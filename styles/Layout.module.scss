@@ -1,14 +1,13 @@
 .layout {
-    padding-top: 80px;
-  }
-  
-  .main {
-    min-height: calc(100vh - 180px);
-    background-image: url('https://cdn.pixabay.com/photo/2014/12/27/15/34/notebook-581128__340.jpg');
-   
-   margin: 0 0 0 0;
-    min-height:100vh;
-    background-repeat:no-repeat;
-    background-size:cover;
-   
-  }
+  padding-top: 80px;
+}
+
+.main {
+  min-height: calc(100vh - 180px);
+  background-image: url('https://cdn.pixabay.com/photo/2014/12/27/15/34/notebook-581128__340.jpg');
+
+  margin: 0 auto;
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
