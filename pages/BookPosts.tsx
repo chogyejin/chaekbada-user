@@ -1,8 +1,8 @@
-import Link from 'next/link';
-import Head from 'next/head';
-import { useEffect, useState } from 'react';
-import { axiosFunction } from '../common/utils';
-import BookList from '../Components/BookList';
+import Link from "next/link";
+import Head from "next/head";
+import { useEffect, useState } from "react";
+import { axiosFunction } from "../common/utils";
+import BookList from "../Components/BookList";
 
 export interface IBookPosts {
   id: string;
@@ -24,9 +24,11 @@ export default function BookPosts() {
   useEffect(() => {
     async function getPosts() {
       const result = await axiosFunction({
-        url: '/bookPostList/new',
-        method: 'GET',
-        params: {},
+        url: "/bookPostList/new",
+        method: "GET",
+        params: {
+          isActive: true,
+        },
       });
 
       if (result) {
@@ -39,7 +41,7 @@ export default function BookPosts() {
           }
           console.log(result.data);
         } else {
-          console.log('안 넘어옴');
+          console.log("안 넘어옴");
         }
       }
     }
@@ -48,9 +50,11 @@ export default function BookPosts() {
 
   const getPostNew = async () => {
     const result = await axiosFunction({
-      url: '/bookPostList/new',
-      method: 'GET',
-      params: {},
+      url: "/bookPostList/new",
+      method: "GET",
+      params: {
+        isActive: true,
+      },
     });
     if (result) {
       if (result.data) {
@@ -61,9 +65,9 @@ export default function BookPosts() {
   };
   const getPostHot = async () => {
     const result = await axiosFunction({
-      url: '/bookPostList/hot',
-      method: 'GET',
-      params: {},
+      url: "/bookPostList/hot",
+      method: "GET",
+      params: { isActive: true },
     });
     if (result) {
       if (result.data) {
@@ -78,22 +82,22 @@ export default function BookPosts() {
       <Head>
         <title>전체 책</title>
       </Head>
-      <h1 style={{ marginBlockStart: '0px', textAlign: 'center' }}>
+      <h1 style={{ marginBlockStart: "0px", textAlign: "center" }}>
         전체 책 게시물이 있는 페이지
       </h1>
 
-      <div style={{ flexDirection: 'row' }}>
-        <div style={{ cursor: 'pointer', margin: '10px' }} onClick={getPostNew}>
+      <div style={{ flexDirection: "row" }}>
+        <div style={{ cursor: "pointer", margin: "10px" }} onClick={getPostNew}>
           최신순
         </div>
-        <div style={{ cursor: 'pointer', margin: '10px' }} onClick={getPostHot}>
+        <div style={{ cursor: "pointer", margin: "10px" }} onClick={getPostHot}>
           인기순
         </div>
       </div>
 
       <BookList list={bookPosts} />
 
-      <div style={{ textAlign: 'center', fontSize: '20px' }}>
+      <div style={{ textAlign: "center", fontSize: "20px" }}>
         <Link href="/BookPostWrite">글 작성하기</Link>
       </div>
       {/* <style jsx></style> */}
