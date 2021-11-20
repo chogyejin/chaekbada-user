@@ -20,6 +20,7 @@ export interface IBookPosts {
 export default function BookPosts() {
   const [bookPosts, setBookPosts] = useState<IBookPosts[]>([]);
   const [isFirstLoad, setIsFirstLoad] = useState<Boolean>(true);
+  const [selectedFilterName, setSelectedFilterName] = useState<string>("new");
 
   useEffect(() => {
     async function getPosts() {
@@ -49,6 +50,7 @@ export default function BookPosts() {
   }, [bookPosts]);
 
   const getPostNew = async () => {
+    setSelectedFilterName("new");
     const result = await axiosFunction({
       url: "/bookPostList/new",
       method: "GET",
@@ -64,6 +66,7 @@ export default function BookPosts() {
     }
   };
   const getPostHot = async () => {
+    setSelectedFilterName("hot");
     const result = await axiosFunction({
       url: "/bookPostList/hot",
       method: "GET",
@@ -82,18 +85,31 @@ export default function BookPosts() {
       <Head>
         <title>전체 책</title>
       </Head>
-      <h1 style={{ marginBlockStart: "0px", textAlign: "center" }}>
-        전체 책 게시물이 있는 페이지
-      </h1>
 
-      <div style={{ flexDirection: "row" }}>
-        <div style={{ cursor: "pointer", margin: "10px" }} onClick={getPostNew}>
+      <div style={{ display: "flex", textAlign: "right" }}>
+        <div
+          style={{
+            cursor: "pointer",
+            margin: "10px",
+            color: selectedFilterName === "new" ? "blue" : "black",
+          }}
+          onClick={getPostNew}
+        >
           최신순
         </div>
-        <div style={{ cursor: "pointer", margin: "10px" }} onClick={getPostHot}>
+        <div
+          style={{
+            cursor: "pointer",
+            margin: "10px",
+
+            color: selectedFilterName === "hot" ? "blue" : "black",
+          }}
+          onClick={getPostHot}
+        >
           인기순
         </div>
       </div>
+      <hr style={{ marginTop: "1px" }} />
 
       <BookList list={bookPosts} />
 
