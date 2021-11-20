@@ -46,15 +46,56 @@ export default function BookPosts() {
     getPosts();
   }, [bookPosts]);
 
+  const getPostNew = () => async () => {
+    const result = await axiosFunction({
+      url: '/bookPostList/new',
+      method: 'GET',
+      params: {},
+    });
+    if (result) {
+      if (result.data) {
+        setBookPosts(result.data || []);
+      }
+    }
+  };
+  const getPostHot = () => async () => {
+    const result = await axiosFunction({
+      url: '/bookPostList/hot',
+      method: 'GET',
+      params: {},
+    });
+    if (result) {
+      if (result.data) {
+        console.log(result.data);
+        const existsPosts = result.data.length > 0;
+        if (isFirstLoad && existsPosts) {
+          setIsFirstLoad(false);
+          setBookPosts(result.data || []);
+        }
+        console.log(result.data);
+      } else {
+        console.log('안 넘어옴');
+      }
+    }
+  };
+
   return (
     <>
       <Head>
         <title>전체 책</title>
       </Head>
-
       <h1 style={{ marginBlockStart: '0px', textAlign: 'center' }}>
         전체 책 게시물이 있는 페이지
       </h1>
+
+      <div style={{ flexDirection: 'row' }}>
+        <div style={{ cursor: 'pointer', margin: '10px' }} onClick={getPostNew}>
+          최신순
+        </div>
+        <div style={{ cursor: 'pointer', margin: '10px' }} onClick={getPostHot}>
+          인기순
+        </div>
+      </div>
 
       <BookList list={bookPosts} />
 
