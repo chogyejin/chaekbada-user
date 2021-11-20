@@ -16,6 +16,7 @@ import { axiosFunction } from '../common/utils';
 import Cookies from 'universal-cookie';
 import jwt from 'jsonwebtoken';
 import { IBook } from './BookPostDetail/[id]';
+import router from 'next/router';
 
 interface IUser {
   id: string;
@@ -176,7 +177,8 @@ export default function Mypage() {
               backgroundColor: 'rgba(0, 0, 0, 0.9)',
               color: '#FF6600',
               border: 'none',
-            }}>
+            }}
+            onClick={() => router.push('/EditProfile')}>
             내 정보 수정
           </Button>
         </div>
