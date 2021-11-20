@@ -14,6 +14,7 @@ export default function BookList({ list }: Props) {
       method: 'POST',
       params: { bookPostID },
     });
+    console.log('찜 버튼 클릭');
   };
   return (
     <>
@@ -26,6 +27,7 @@ export default function BookList({ list }: Props) {
         {list.map((bookpost, id) => (
           <div
             style={{
+              display: 'flex',
               padding: '10px',
               marginBottom: '20px',
               border: '1px solid black',
@@ -47,11 +49,11 @@ export default function BookList({ list }: Props) {
                   </div>
                   <div>판매자 :{bookpost.user.name}</div>
                 </div>
-                <div>
-                  <button onClick={interest(bookpost.id)}>찜</button>
-                </div>
               </div>
             </Link>
+            <div style={{ marginLeft: 'auto', alignSelf: 'center' }}>
+              <button onClick={interest(bookpost.id)}>찜</button>
+            </div>
           </div>
         ))}
       </div>
