@@ -46,7 +46,7 @@ export default function BookPosts() {
     getPosts();
   }, [bookPosts]);
 
-  const getPostNew = () => async () => {
+  const getPostNew = async () => {
     const result = await axiosFunction({
       url: '/bookPostList/new',
       method: 'GET',
@@ -56,9 +56,10 @@ export default function BookPosts() {
       if (result.data) {
         setBookPosts(result.data || []);
       }
+      console.log(bookPosts);
     }
   };
-  const getPostHot = () => async () => {
+  const getPostHot = async () => {
     const result = await axiosFunction({
       url: '/bookPostList/hot',
       method: 'GET',
@@ -66,16 +67,9 @@ export default function BookPosts() {
     });
     if (result) {
       if (result.data) {
-        console.log(result.data);
-        const existsPosts = result.data.length > 0;
-        if (isFirstLoad && existsPosts) {
-          setIsFirstLoad(false);
-          setBookPosts(result.data || []);
-        }
-        console.log(result.data);
-      } else {
-        console.log('안 넘어옴');
+        setBookPosts(result.data || []);
       }
+      console.log(bookPosts);
     }
   };
 
