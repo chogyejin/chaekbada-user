@@ -7,7 +7,8 @@ import { axiosFunction } from "../common/utils";
 import Cookies from "universal-cookie";
 import jwt from "jsonwebtoken";
 import router from "next/router";
-import {Button, Input, InputGroup, Label} from "reactstrap";
+import { Button, Input, InputGroup, Label } from "reactstrap";
+import FileUploadInput from "../Components/FileUploadInput";
 
 export default function BookPostWrite() {
   const [title, setTitle] = useState<string>("");
@@ -16,6 +17,7 @@ export default function BookPostWrite() {
   const [buyingItNowPrice, setBuyingItNowPrice] = useState<number>(0);
   const [reservePrice, setReservePrice] = useState<number>(0);
   const [contents, setContents] = useState<string>("");
+  const [bookImageUrl, setBookImageUrl] = useState<string>("");
   const [endDate, setEndDate] = useState<Date>(
     new Date(new Date().toDateString() + " " + "23:59:59")
   );
@@ -40,9 +42,9 @@ export default function BookPostWrite() {
     e.preventDefault();
 
     const isValidPrice = buyingItNowPrice >= reservePrice;
-    if(!isValidPrice){
-      alert("즉시 구매가 보다 최저 경매가가 높을 수 없습니다.")
-      return
+    if (!isValidPrice) {
+      alert("즉시 구매가 보다 최저 경매가가 높을 수 없습니다.");
+      return;
     }
 
     const result = await axiosFunction({
@@ -56,7 +58,7 @@ export default function BookPostWrite() {
         endDate,
         reservePrice,
         buyingItNowPrice,
-        bookImageUrl: "",
+        bookImageUrl,
         thumbnail,
       },
     });
@@ -82,11 +84,15 @@ export default function BookPostWrite() {
     console.log(new Date(endDate.toDateString() + " " + "23:59:59"));
   }, [endDate]);
 
+  const onClickUpload = (uploadedBookImageUrl: string) => {
+    setBookImageUrl(uploadedBookImageUrl);
+  };
+
   console.log(buyingItNowPrice);
   return (
     <>
       <div className={"book-post-write-page-container"}>
-        <form className={"form-container"} onSubmit={onSubmit}>
+        <form className={"form-container"}>
           {!selectedBook.title && (
             <div>
               <BookSearch getData={getData} getBookID={getBookID} />
@@ -138,6 +144,9 @@ export default function BookPostWrite() {
             />
           </div>
           <div>
+            <FileUploadInput onClickUpload={onClickUpload} />
+          </div>
+          <div>
             <Input
               type="textarea"
               style={{ height: "300px", resize: "none" }}
@@ -145,16 +154,19 @@ export default function BookPostWrite() {
               onChange={(event) => {
                 setContents(event.target.value);
               }}
-            ></Input>
+            />
           </div>
-          <div style={{textAlign:"right", marginTop:"8px"}}>
-            {title && buyingItNowPrice && reservePrice && contents && endDate ? (
-                <Button>작성</Button>
+          <div style={{ textAlign: "right", marginTop: "8px" }}>
+            {title &&
+            buyingItNowPrice &&
+            reservePrice &&
+            contents &&
+            endDate ? (
+              <Button onClick={onSubmit}>작성</Button>
             ) : (
-                <Button disabled>작성</Button>
+              <Button disabled>작성</Button>
             )}
           </div>
-
         </form>
       </div>
       <style jsx={true}>
