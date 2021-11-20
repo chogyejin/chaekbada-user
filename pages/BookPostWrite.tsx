@@ -23,6 +23,10 @@ export default function BookPostWrite() {
   useEffect(() => {
     const cookies = new Cookies();
     const localCookies = cookies.get('chaekbadaUserCookie');
+    if(!localCookies){
+      router.push("/Login")
+      return;
+    }
     const decodedToken = jwt.verify(
       localCookies,
       process.env.NEXT_PUBLIC_JWT_SECRET as string,
@@ -124,3 +128,6 @@ export default function BookPostWrite() {
     </>
   );
 }
+
+
+
