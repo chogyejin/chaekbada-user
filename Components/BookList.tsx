@@ -1,11 +1,20 @@
 import { IBookPosts } from '../pages/BookPosts';
+import { axiosFunction } from '../common/utils';
 import Link from 'next/link';
+import BookPost from '../pages/BookPostDetail/[id]';
 
 interface Props {
   list: IBookPosts[];
 }
 
 export default function BookList({ list }: Props) {
+  const interest = (bookPostID: string) => async () => {
+    const result = await axiosFunction({
+      url: '/bookPost/post/interestCount',
+      method: 'POST',
+      params: { bookPostID },
+    });
+  };
   return (
     <>
       <div
@@ -37,6 +46,9 @@ export default function BookList({ list }: Props) {
                     마감 기한 : {bookpost.endDate.toString().slice(0, 10)}
                   </div>
                   <div>판매자 :{bookpost.user.name}</div>
+                </div>
+                <div>
+                  <button onClick={interest(bookpost.id)}>찜</button>
                 </div>
               </div>
             </Link>

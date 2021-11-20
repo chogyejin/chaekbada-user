@@ -31,6 +31,7 @@ export default function BookPosts() {
 
       if (result) {
         if (result.data) {
+          console.log(result.data);
           const existsPosts = result.data.length > 0;
           if (isFirstLoad && existsPosts) {
             setIsFirstLoad(false);
@@ -56,6 +57,7 @@ export default function BookPosts() {
       </h1>
 
       <BookList list={bookPosts} />
+
       <div style={{ textAlign: 'center', fontSize: '20px' }}>
         <Link href="/BookPostWrite">글 작성하기</Link>
       </div>
