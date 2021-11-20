@@ -69,10 +69,20 @@ export default function BookPost() {
 
   return (
     <>
-      <div>
-        <h1>상세 페이지</h1>
+      <div className={"book-post-page-detail-container"}>
         <Book book={book} bookPostID={bookPostID} />
       </div>
+      <style jsx={true}>
+        {`
+          .book-post-page-detail-container {
+            max-width: 700px;
+            border: 1px solid;
+            margin: 50px auto;
+            padding: 16px;
+            border-radius: 10px;
+          }
+        `}
+      </style>
     </>
   );
 }
