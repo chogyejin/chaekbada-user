@@ -4,8 +4,7 @@ import type { AppProps } from 'next/app';
 import Layout from '../Components/Layout';
 import 'bootstrap/scss/bootstrap.scss';
 
-
-function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
@@ -19,7 +18,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     </>
   );
 }
-export default MyApp;
 
 //책바다 쿠키가 있는 지 확인
 //있으면 그대로 사용

@@ -10,7 +10,7 @@ interface Props {
 export default function BookList({ list }: Props) {
   const interest = (bookPostID: string) => async () => {
     const result = await axiosFunction({
-      url: '/bookPost/post/interestCount',
+      url: '/bookPost/post/interestedCount',
       method: 'POST',
       params: { bookPostID },
     });
