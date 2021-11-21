@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import { axiosFunction } from "../common/utils";
 import BookList from "../Components/BookList";
+import { Button } from "reactstrap";
 
 export interface IBookPosts {
   id: string;
@@ -86,36 +87,51 @@ export default function BookPosts() {
         <title>전체 책</title>
       </Head>
 
-      <div style={{ display: "flex", textAlign: "right" }}>
+      <div
+        style={{
+          display: "flex",
+          textAlign: "right",
+          justifyContent: "space-between",
+        }}
+      >
         <div
           style={{
-            cursor: "pointer",
-            margin: "10px",
-            color: selectedFilterName === "new" ? "blue" : "black",
+            display: "flex",
           }}
-          onClick={getPostNew}
         >
-          최신순
-        </div>
-        <div
-          style={{
-            cursor: "pointer",
-            margin: "10px",
+          <div
+            style={{
+              cursor: "pointer",
+              margin: "10px",
+              color: selectedFilterName === "new" ? "blue" : "black",
+            }}
+            onClick={getPostNew}
+          >
+            최신순
+          </div>
+          <div
+            style={{
+              cursor: "pointer",
+              margin: "10px",
 
-            color: selectedFilterName === "hot" ? "blue" : "black",
-          }}
-          onClick={getPostHot}
-        >
-          인기순
+              color: selectedFilterName === "hot" ? "blue" : "black",
+            }}
+            onClick={getPostHot}
+          >
+            인기순
+          </div>
+        </div>
+        <div style={{ textAlign: "center", paddingTop: "4px" }}>
+          <Link href="/BookPostWrite">
+            <Button color={"primary"}>판매 등록</Button>
+          </Link>
         </div>
       </div>
+
       <hr style={{ marginTop: "1px" }} />
 
       <BookList list={bookPosts} />
 
-      <div style={{ textAlign: "center", fontSize: "20px" }}>
-        <Link href="/BookPostWrite">글 작성하기</Link>
-      </div>
       {/* <style jsx></style> */}
     </>
   );
