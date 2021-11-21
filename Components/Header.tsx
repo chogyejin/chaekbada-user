@@ -6,9 +6,11 @@ import jwt from "jsonwebtoken";
 import { onLogout, onMoveLoginPage } from "../common/utils";
 import { Button } from "reactstrap";
 import React from "react";
+import router from "next/router";
 
 const Header = () => {
   const [isVerifiedToken, setIsVerifiedToken] = useState<boolean>(false);
+  const [searchWord, setSearchWord] = useState<string>("");
 
   useEffect(() => {
     const cookies = new Cookies();
@@ -26,6 +28,12 @@ const Header = () => {
       setIsVerifiedToken(false);
     }
   });
+
+  const enterKey = (e: any) => {
+    if (e.key === "Enter") {
+      window.open(`/BookPosts?searchWord=${searchWord}`);
+    }
+  };
 
   return (
     <>
@@ -88,7 +96,15 @@ const Header = () => {
               </Link>
             </div>
             <div className="ui icon input" id="search">
-              <input type="text" placeholder="Search..." />
+              <input
+                value={searchWord}
+                onChange={(e) => {
+                  setSearchWord(e.currentTarget.value);
+                }}
+                type="text"
+                placeholder="Search..."
+                onKeyUp={enterKey}
+              />
               <i className="search icon"></i>
             </div>
           </div>

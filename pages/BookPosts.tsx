@@ -5,6 +5,10 @@ import { axiosFunction } from "../common/utils";
 import BookList from "../Components/BookList";
 import { Button } from "reactstrap";
 
+interface IProps {
+  searchWord: string;
+}
+
 export interface IBookPosts {
   id: string;
   title: string;
@@ -18,10 +22,11 @@ export interface IBookPosts {
   };
 }
 
-export default function BookPosts() {
+export default function BookPosts(props: IProps) {
   const [bookPosts, setBookPosts] = useState<IBookPosts[]>([]);
   const [isFirstLoad, setIsFirstLoad] = useState<Boolean>(true);
   const [selectedFilterName, setSelectedFilterName] = useState<string>("new");
+  console.log(props.searchWord);
 
   useEffect(() => {
     async function getPosts() {
@@ -47,7 +52,36 @@ export default function BookPosts() {
         }
       }
     }
-    getPosts();
+
+    async function getSearchPosts() {
+      const result = await axiosFunction({
+        url: "/bookPost/searchBook",
+        method: "GET",
+        params: {
+          searchWord: props.searchWord,
+        },
+      });
+
+      if (result) {
+        if (result.data) {
+          console.log(result.data);
+          const existsPosts = result.data.length > 0;
+          if (isFirstLoad && existsPosts) {
+            setIsFirstLoad(false);
+            setBookPosts(result.data || []);
+          }
+          console.log(result.data);
+        } else {
+          console.log("안 넘어옴");
+        }
+      }
+    }
+
+    if (props.searchWord) {
+      getSearchPosts();
+    } else {
+      getPosts();
+    }
   }, [bookPosts]);
 
   const getPostNew = async () => {
@@ -135,4 +169,18 @@ export default function BookPosts() {
       {/* <style jsx></style> */}
     </>
   );
+}
+
+export async function getServerSideProps(context: {
+  query: { searchWord: string };
+}) {
+  if (context && context.query && context.query.searchWord) {
+    return {
+      props: { searchWord: context.query.searchWord }, // will be passed to the page component as props
+    };
+  }
+
+  return {
+    props: {}, // will be passed to the page component as props
+  };
 }
