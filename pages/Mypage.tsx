@@ -12,11 +12,11 @@ import {
   CardText,
   CardTitle,
 } from 'reactstrap';
+
 import { axiosFunction } from '../common/utils';
 import Cookies from 'universal-cookie';
 import jwt from 'jsonwebtoken';
 import { IBook } from './BookPostDetail/[id]';
-import router from 'next/router';
 
 export interface IUser {
   id: string;
@@ -61,6 +61,30 @@ export default function Mypage() {
   const [activeTab, setActieTab] = useState<string>('1');
   const [interestedPosts, setInterestedPosts] = useState<IInterstedPosts[]>([]);
   const [biddingBooks, setBiddingBooks] = useState<IBiddingBooks[]>([]);
+  const [purschasedBooks, setPurschasedBooks] = useState<
+    Array<{
+      id: string;
+      userID: string;
+      bookPostID: string;
+      point: string;
+      isHighest: string;
+      bookPost: {
+        id: string;
+        bookID: string;
+        title: string;
+        contents: string;
+        userID: string;
+        interestedCounts: string;
+        endDate: string;
+        bidPrice: string;
+        buyingItNowPrice: string;
+        reservePrice: string;
+        bookImageUrl: string;
+        isActive: boolean;
+        thumbnail: string;
+      };
+    }>
+  >([]);
 
   useEffect(() => {
     async function getUser() {
@@ -136,6 +160,30 @@ export default function Mypage() {
     getBiddingBooks();
   }, []);
 
+  useEffect(() => {
+    async function getPurschasedBooks() {
+      const cookies = new Cookies();
+      const localCookies = cookies.get('chaekbadaUserCookie');
+      const decodedToken = jwt.verify(
+        localCookies,
+        process.env.NEXT_PUBLIC_JWT_SECRET as string,
+      ) as any;
+
+      const result = await axiosFunction({
+        url: '/mypage/list/purchase',
+        method: 'GET',
+        params: {
+          userID: decodedToken.id,
+        },
+      });
+      if (result && result.data) {
+        setPurschasedBooks(result.data);
+      }
+    }
+
+    getPurschasedBooks();
+  }, []);
+
   const setActiveTab = (id: string) => () => {
     setActieTab(id);
   };
@@ -198,48 +246,119 @@ export default function Mypage() {
 
       <TabContent activeTab={activeTab}>
         <TabPane tabId="1">
-          {interestedPosts.map((post, id) => (
-            <div
-              key={id}
-              style={{
-                border: '1px solid black',
-                display: 'flex',
-                marginBottom: '15px',
-              }}>
-              <div style={{ padding: '10px' }}>
-                <img src={post.interestedPost.thumbnail} />
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'space-between',
+              marginTop: '16px',
+            }}>
+            {interestedPosts.map((post, id) => (
+              <div
+                key={id}
+                style={{
+                  width: '33%',
+                  borderRadius: '5px',
+                  border: '1px solid black',
+                  display: 'flex',
+                  marginBottom: '15px',
+                }}>
+                <div style={{ padding: '10px' }}>
+                  <img src={post.interestedPost.thumbnail} />
+                </div>
+                <div style={{ padding: '10px' }}>
+                  <div>책 제목: {post.interestedPost.title}</div>
+                  <div>
+                    입찰 마감 시간:{' '}
+                    {post.interestedPost.endDate.toString().slice(0, 10)}
+                  </div>
+                  <div>
+                    즉시 구매가 : {post.interestedPost.buyingItNowPrice}
+                  </div>
+                  <div>현재 입찰가 : {post.interestedPost.bidPrice}</div>
+                </div>
               </div>
-              <div>
-                <div>{post.interestedPost.title}</div>
-                <div>{post.interestedPost.endDate.toString().slice(0, 10)}</div>
-                <div>즉시 구매가 : {post.interestedPost.buyingItNowPrice}</div>
-                <div>현재 입찰가 : {post.interestedPost.bidPrice}</div>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </TabPane>
-        <TabPane tabId="2">나는 구매 목록 탭</TabPane>
+        <TabPane tabId="2">
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'space-between',
+              marginTop: '16px',
+            }}>
+            {purschasedBooks.map((post, id) => (
+              <div
+                key={id}
+                style={{
+                  borderRadius: '5px',
+                  width: '25%',
+                  border: '1px solid black',
+                  display: 'flex',
+                  marginBottom: '15px',
+                  justifyContent: 'space-between',
+                }}>
+                <div style={{ padding: '10px' }}>
+                  <img src={post.bookPost.thumbnail} />
+                </div>
+                <div
+                  style={{
+                    padding: '10px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                  }}>
+                  <div>책 제목: {post.bookPost.title}</div>
+                  <div
+                    style={{
+                      textAlign: 'right',
+                      fontWeight: 'bold',
+                      fontSize: '1.5rem',
+                    }}>
+                    {' '}
+                    {post.bookPost.bidPrice}원에 입찰 성공
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </TabPane>
         <TabPane tabId="3">
-          {biddingBooks.map((post, id) => (
-            <div
-              key={id}
-              style={{
-                border: '1px solid black',
-                display: 'flex',
-                marginBottom: '15px',
-              }}>
-              <div style={{ padding: '10px' }}>
-                <img src={post.bookPost.thumbnail} />
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'space-between',
+              marginTop: '16px',
+            }}>
+            {biddingBooks.map((post, id) => (
+              <div
+                key={id}
+                style={{
+                  borderRadius: '5px',
+                  width: '33%',
+                  border: '1px solid black',
+                  display: 'flex',
+                  marginBottom: '15px',
+                }}>
+                <div style={{ padding: '10px' }}>
+                  <img src={post.bookPost.thumbnail} />
+                </div>
+                <div style={{ padding: '10px' }}>
+                  <div>책 제목: {post.bookPost.title}</div>
+                  <div>
+                    입찰 마감 시간:{' '}
+                    {post.bookPost.endDate.toString().slice(0, 10)}
+                  </div>
+                  <div>즉시 구매가: {post.bookPost.buyingItNowPrice}</div>
+                  <div>현재 입찰가: {post.bookPost.bidPrice}</div>
+                  <div style={{ color: 'blue' }}>내 입찰가: {post.point}</div>
+                </div>
               </div>
-              <div>
-                <div>{post.bookPost.title}</div>
-                <div>{post.bookPost.endDate.toString().slice(0, 10)}</div>
-                <div>즉시 구매가 : {post.bookPost.buyingItNowPrice}</div>
-                <div>현재 입찰가 : {post.bookPost.bidPrice}</div>
-                <div>내 입찰가 : {post.point}</div>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </TabPane>
       </TabContent>
 

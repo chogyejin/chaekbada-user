@@ -1,8 +1,13 @@
-import Link from 'next/link';
-import Head from 'next/head';
-import { useEffect, useState } from 'react';
-import { axiosFunction } from '../common/utils';
-import BookList from '../Components/BookList';
+import Link from "next/link";
+import Head from "next/head";
+import { useEffect, useState } from "react";
+import { axiosFunction } from "../common/utils";
+import BookList from "../Components/BookList";
+import { Button } from "reactstrap";
+
+interface IProps {
+  searchWord: string;
+}
 
 export interface IBookPosts {
   id: string;
@@ -17,16 +22,20 @@ export interface IBookPosts {
   };
 }
 
-export default function BookPosts() {
+export default function BookPosts(props: IProps) {
   const [bookPosts, setBookPosts] = useState<IBookPosts[]>([]);
   const [isFirstLoad, setIsFirstLoad] = useState<Boolean>(true);
+  const [selectedFilterName, setSelectedFilterName] = useState<string>("new");
+  console.log(props.searchWord);
 
   useEffect(() => {
     async function getPosts() {
       const result = await axiosFunction({
-        url: '/bookPostList/new',
-        method: 'GET',
-        params: {},
+        url: "/bookPostList/new",
+        method: "GET",
+        params: {
+          isActive: true,
+        },
       });
 
       if (result) {
@@ -39,12 +48,72 @@ export default function BookPosts() {
           }
           console.log(result.data);
         } else {
-          console.log('안 넘어옴');
+          console.log("안 넘어옴");
         }
       }
     }
-    getPosts();
+
+    async function getSearchPosts() {
+      const result = await axiosFunction({
+        url: "/bookPost/searchBook",
+        method: "GET",
+        params: {
+          searchWord: props.searchWord,
+        },
+      });
+
+      if (result) {
+        if (result.data) {
+          console.log(result.data);
+          const existsPosts = result.data.length > 0;
+          if (isFirstLoad && existsPosts) {
+            setIsFirstLoad(false);
+            setBookPosts(result.data || []);
+          }
+          console.log(result.data);
+        } else {
+          console.log("안 넘어옴");
+        }
+      }
+    }
+
+    if (props.searchWord) {
+      getSearchPosts();
+    } else {
+      getPosts();
+    }
   }, [bookPosts]);
+
+  const getPostNew = async () => {
+    setSelectedFilterName("new");
+    const result = await axiosFunction({
+      url: "/bookPostList/new",
+      method: "GET",
+      params: {
+        isActive: true,
+      },
+    });
+    if (result) {
+      if (result.data) {
+        setBookPosts(result.data || []);
+      }
+      console.log(bookPosts);
+    }
+  };
+  const getPostHot = async () => {
+    setSelectedFilterName("hot");
+    const result = await axiosFunction({
+      url: "/bookPostList/hot",
+      method: "GET",
+      params: { isActive: true },
+    });
+    if (result) {
+      if (result.data) {
+        setBookPosts(result.data || []);
+      }
+      console.log(bookPosts);
+    }
+  };
 
   return (
     <>
@@ -52,16 +121,66 @@ export default function BookPosts() {
         <title>전체 책</title>
       </Head>
 
-      <h1 style={{ marginBlockStart: '0px', textAlign: 'center' }}>
-        전체 책 게시물이 있는 페이지
-      </h1>
+      <div
+        style={{
+          display: "flex",
+          textAlign: "right",
+          justifyContent: "space-between",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+          }}
+        >
+          <div
+            style={{
+              cursor: "pointer",
+              margin: "10px",
+              color: selectedFilterName === "new" ? "blue" : "black",
+            }}
+            onClick={getPostNew}
+          >
+            최신순
+          </div>
+          <div
+            style={{
+              cursor: "pointer",
+              margin: "10px",
+
+              color: selectedFilterName === "hot" ? "blue" : "black",
+            }}
+            onClick={getPostHot}
+          >
+            인기순
+          </div>
+        </div>
+        <div style={{ textAlign: "center", paddingTop: "4px" }}>
+          <Link href="/BookPostWrite">
+            <Button color={"primary"}>판매 등록</Button>
+          </Link>
+        </div>
+      </div>
+
+      <hr style={{ marginTop: "1px" }} />
 
       <BookList list={bookPosts} />
 
-      <div style={{ textAlign: 'center', fontSize: '20px' }}>
-        <Link href="/BookPostWrite">글 작성하기</Link>
-      </div>
       {/* <style jsx></style> */}
     </>
   );
+}
+
+export async function getServerSideProps(context: {
+  query: { searchWord: string };
+}) {
+  if (context && context.query && context.query.searchWord) {
+    return {
+      props: { searchWord: context.query.searchWord }, // will be passed to the page component as props
+    };
+  }
+
+  return {
+    props: {}, // will be passed to the page component as props
+  };
 }

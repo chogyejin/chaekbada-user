@@ -1,31 +1,39 @@
-import { useEffect, useState } from 'react';
-import BookSearch from '../Components/BookSearch';
-import DatePicker from 'react-datepicker';
-import ko from 'date-fns/locale/ko';
-import 'react-datepicker/dist/react-datepicker.css';
-import { axiosFunction } from '../common/utils';
-import Cookies from 'universal-cookie';
-import jwt from 'jsonwebtoken';
-import router from 'next/router';
+import { useEffect, useState } from "react";
+import BookSearch from "../Components/BookSearch";
+import DatePicker from "react-datepicker";
+import ko from "date-fns/locale/ko";
+import "react-datepicker/dist/react-datepicker.css";
+import { axiosFunction } from "../common/utils";
+import Cookies from "universal-cookie";
+import jwt from "jsonwebtoken";
+import router from "next/router";
+import { Button, Input, InputGroup, Label } from "reactstrap";
+import FileUploadInput from "../Components/FileUploadInput";
 
 export default function BookPostWrite() {
-  const [title, setTitle] = useState<string>('');
-  const [thumbnail, setThumbnail] = useState<string>('');
+  const [title, setTitle] = useState<string>("");
+  const [selectedBook, setSelectedBook] = useState<any>("");
+  const [thumbnail, setThumbnail] = useState<string>("");
   const [buyingItNowPrice, setBuyingItNowPrice] = useState<number>(0);
   const [reservePrice, setReservePrice] = useState<number>(0);
-  const [contents, setContents] = useState<string>('');
+  const [contents, setContents] = useState<string>("");
+  const [bookImageUrl, setBookImageUrl] = useState<string>("");
   const [endDate, setEndDate] = useState<Date>(
-    new Date(new Date().toDateString() + ' ' + '23:59:59'),
+    new Date(new Date().toDateString() + " " + "23:59:59")
   );
-  const [decodedID, setDecodedID] = useState<string>('');
-  const [bookID, setBookID] = useState<string>('');
+  const [decodedID, setDecodedID] = useState<string>("");
+  const [bookID, setBookID] = useState<string>("");
 
   useEffect(() => {
     const cookies = new Cookies();
-    const localCookies = cookies.get('chaekbadaUserCookie');
+    const localCookies = cookies.get("chaekbadaUserCookie");
+    if (!localCookies) {
+      router.push("/Login");
+      return;
+    }
     const decodedToken = jwt.verify(
       localCookies,
-      process.env.NEXT_PUBLIC_JWT_SECRET as string,
+      process.env.NEXT_PUBLIC_JWT_SECRET as string
     ) as any;
     setDecodedID(decodedToken.id);
   }, []);
@@ -33,9 +41,15 @@ export default function BookPostWrite() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
 
+    const isValidPrice = buyingItNowPrice >= reservePrice;
+    if (!isValidPrice) {
+      alert("즉시 구매가 보다 최저 경매가가 높을 수 없습니다.");
+      return;
+    }
+
     const result = await axiosFunction({
-      url: '/bookPost/write',
-      method: 'POST',
+      url: "/bookPost/write",
+      method: "POST",
       params: {
         bookID,
         title,
@@ -44,14 +58,14 @@ export default function BookPostWrite() {
         endDate,
         reservePrice,
         buyingItNowPrice,
-        bookImageUrl: '',
+        bookImageUrl,
         thumbnail,
       },
     });
 
     if (result) {
       if (result.data) {
-        router.push('/BookPosts');
+        router.push("/BookPosts");
       }
     }
   }
@@ -60,67 +74,117 @@ export default function BookPostWrite() {
     setBookID(bookID);
   }
 
-  function getData(title: string, thumbnail: string) {
+  function getData(title: string, thumbnail: string, book: any) {
     setTitle(title);
     setThumbnail(thumbnail);
+    setSelectedBook(book);
   }
 
   useEffect(() => {
-    console.log(new Date(endDate.toDateString() + ' ' + '23:59:59'));
+    console.log(new Date(endDate.toDateString() + " " + "23:59:59"));
   }, [endDate]);
 
+  const onClickUpload = (uploadedBookImageUrl: string) => {
+    setBookImageUrl(uploadedBookImageUrl);
+  };
+
+  console.log(buyingItNowPrice);
   return (
     <>
-      <h1 style={{ textAlign: 'center' }}>글 작성하는 페이지</h1>
-      <form onSubmit={onSubmit}>
-        <div>
-          <BookSearch getData={getData} getBookID={getBookID} />
-        </div>
-        <div>책 제목</div>
-        <div>{title}</div>
-        <div>
+      <div className={"book-post-write-page-container"}>
+        <form className={"form-container"}>
+          {!selectedBook.title && (
+            <div>
+              <BookSearch getData={getData} getBookID={getBookID} />
+            </div>
+          )}
+
+          {selectedBook.title && (
+            <div style={{ marginBottom: "16px" }}>
+              <div style={{ fontSize: "24px" }}>선택된 책</div>
+              <div style={{ fontWeight: "bold" }}>{title}</div>
+              <img src={selectedBook.thumbnail} />
+            </div>
+          )}
+
           <div>
-            <input
-              placeholder="즉시 구매가 (원)"
-              onChange={(event) => {
-                setBuyingItNowPrice(Number(event.target.value));
-              }}
+            <div style={{ textAlign: "left", marginBottom: "16px" }}>
+              <Label>즉시 구매가</Label>
+              <Input
+                type={"number"}
+                value={Number(buyingItNowPrice).toString()}
+                placeholder="즉시 구매가 (원)"
+                onChange={(event) => {
+                  setBuyingItNowPrice(Number(event.target.value));
+                }}
+              />
+            </div>
+            <div style={{ textAlign: "left", marginBottom: "16px" }}>
+              <Label>최저 경매가</Label>
+              <Input
+                type={"number"}
+                value={Number(reservePrice).toString()}
+                placeholder="최저 경매가 (원)"
+                onChange={(event) => {
+                  setReservePrice(Number(event.target.value));
+                }}
+              />
+            </div>
+          </div>
+          <div style={{ textAlign: "left", marginBottom: "16px" }}>
+            <Label>입찰 마감일</Label>
+            <DatePicker
+              locale={ko}
+              dateFormat="yyyy년 MM월 dd일"
+              minDate={new Date()}
+              selected={endDate}
+              onChange={(date: Date) =>
+                setEndDate(new Date(date.toDateString() + " " + "23:59:59"))
+              }
             />
           </div>
           <div>
-            <input
-              placeholder="최저 경매가 (원)"
+            <FileUploadInput onClickUpload={onClickUpload} />
+          </div>
+          <div>
+            <Input
+              type="textarea"
+              style={{ height: "300px", resize: "none" }}
+              placeholder="글 내용"
               onChange={(event) => {
-                setReservePrice(Number(event.target.value));
+                setContents(event.target.value);
               }}
             />
           </div>
-        </div>
-        <div>
-          <DatePicker
-            locale={ko}
-            dateFormat="yyyy년 MM월 dd일"
-            minDate={new Date()}
-            selected={endDate}
-            onChange={(date: Date) =>
-              setEndDate(new Date(date.toDateString() + ' ' + '23:59:59'))
-            }
-          />
-        </div>
-        <div>
-          <textarea
-            style={{ width: '500px', height: '300px', resize: 'none' }}
-            placeholder="글 내용"
-            onChange={(event) => {
-              setContents(event.target.value);
-            }}></textarea>
-        </div>
-        {title && buyingItNowPrice && reservePrice && contents && endDate ? (
-          <button>작성</button>
-        ) : (
-          <button disabled>작성</button>
-        )}
-      </form>
+          <div style={{ textAlign: "right", marginTop: "8px" }}>
+            {title &&
+            buyingItNowPrice &&
+            reservePrice &&
+            contents &&
+            endDate ? (
+              <Button onClick={onSubmit}>작성</Button>
+            ) : (
+              <Button disabled>작성</Button>
+            )}
+          </div>
+        </form>
+      </div>
+      <style jsx={true}>
+        {`
+          .book-post-write-page-container {
+            padding: 30px 20px;
+          }
+
+          .form-container {
+            text-align: center;
+            max-width: 700px;
+            border: 1px solid;
+            margin: auto;
+            padding: 16px;
+            border-radius: 10px;
+          }
+        `}
+      </style>
     </>
   );
 }
