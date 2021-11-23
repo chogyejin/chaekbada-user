@@ -3,7 +3,7 @@ import styles from '/styles/HomeContainer.module.scss';
 const HomeContainer = () => {
   return (
     <>
-      <h1 style={{ textAlign: 'center' }}>홈홈홈</h1>
+      <h1 style={{ textAlign: 'center' }}>책바다 홈페이지 입니다.</h1>
     </>
   );
 };
