@@ -18,7 +18,7 @@ import jwt from 'jsonwebtoken';
 import { IBook } from './BookPostDetail/[id]';
 import router from 'next/router';
 
-interface IUser {
+export interface IUser {
   id: string;
   email: string;
   password: string;
@@ -178,7 +178,8 @@ export default function Mypage() {
               color: '#FF6600',
               border: 'none',
             }}
-            onClick={() => router.push('/EditProfile')}>
+            // onClick={() => router.push('/EditProfile')}
+          >
             내 정보 수정
           </Button>
         </div>
