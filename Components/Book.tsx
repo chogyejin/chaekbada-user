@@ -41,7 +41,7 @@ export default function Book({ book, bookPostID }: Props) {
   }, []);
 
   async function onClickNowBuying() {
-    const { data } = await axiosFunction({
+    const { data }: any = await axiosFunction({
       url: '/buyImmediatelyBookPost',
       method: 'PUT',
       params: {
@@ -103,6 +103,10 @@ export default function Book({ book, bookPostID }: Props) {
       }
     }
   }
+
+  useEffect(() => {
+    console.log(bookImageUrl);
+  }, [bookImageUrl]);
   return (
     <>
       <div
