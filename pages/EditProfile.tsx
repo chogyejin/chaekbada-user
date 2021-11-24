@@ -5,6 +5,7 @@ import { IUser } from './Mypage';
 import Cookies from 'universal-cookie';
 import jwt from 'jsonwebtoken';
 import { axiosFunction } from '../common/utils';
+import router from 'next/router';
 
 export default function EditProfile() {
   const [user, setUser] = useState<IUser>({
@@ -22,6 +23,7 @@ export default function EditProfile() {
   const [address, setAddress] = useState<string>('');
   const [fullAddress, setFullAddress] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const userID = router.query.user;
 
   function openPopup(e: React.FormEvent) {
     e.preventDefault();
@@ -57,14 +59,32 @@ export default function EditProfile() {
     getUser();
   }, []);
 
+  async function onChangeAddress() {
+    console.log(fullAddress);
+    const result = await axiosFunction({
+      url: '/mypage/modify/address',
+      method: 'POST',
+      params: {
+        userID,
+        address: fullAddress,
+      },
+    });
+
+    if (result) {
+      if (result.data) {
+        console.log(result.data);
+      }
+    }
+  }
+
   return (
     <>
       <h1>회원정보 수정하는 페이지</h1>
-      <div>비밀번호나 주소를 수정하실 수 있습니다.</div>
       <div>
         <div>현재 주소 : {user.address} </div>
         <div style={{ display: 'flex' }}>
           <Input
+            style={{ width: '400px' }}
             className="loginregister__input"
             type="text"
             placeholder="주소 입력"
@@ -77,13 +97,14 @@ export default function EditProfile() {
             주소 찾기
           </Button>
           {isOpen && (
-            <>
+            <div>
               <AddressComponent getAddress={getAddress} />
-            </>
+            </div>
           )}
         </div>
         <div>
           <Input
+            style={{ width: '500px', height: '50px' }}
             className="loginregister__input"
             type="text"
             placeholder="상세주소 입력"
@@ -91,6 +112,9 @@ export default function EditProfile() {
               setFullAddress(address + ' ' + event.target.value);
             }}
           />
+        </div>
+        <div>
+          <Button onClick={onChangeAddress}>주소 변경</Button>
         </div>
       </div>
     </>

@@ -1,22 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Button,
-  Nav,
-  NavLink,
-  NavItem,
-  TabContent,
-  TabPane,
-  Row,
-  Col,
-  Card,
-  CardText,
-  CardTitle,
-} from 'reactstrap';
+import { Button, Nav, NavLink, NavItem, TabContent, TabPane } from 'reactstrap';
 
 import { axiosFunction } from '../common/utils';
 import Cookies from 'universal-cookie';
 import jwt from 'jsonwebtoken';
 import { IBook } from './BookPostDetail/[id]';
+import router from 'next/router';
 
 export interface IUser {
   id: string;
@@ -85,6 +74,12 @@ export default function Mypage() {
       };
     }>
   >([]);
+  const cookies = new Cookies();
+  const localCookies = cookies.get('chaekbadaUserCookie');
+  const decodedToken = jwt.verify(
+    localCookies,
+    process.env.NEXT_PUBLIC_JWT_SECRET as string,
+  ) as any;
 
   useEffect(() => {
     async function getUser() {
@@ -226,8 +221,7 @@ export default function Mypage() {
               color: '#FF6600',
               border: 'none',
             }}
-            // onClick={() => router.push('/EditProfile')}
-          >
+            onClick={() => router.push(`/EditProfile?user=${decodedToken.id}`)}>
             내 정보 수정
           </Button>
         </div>
