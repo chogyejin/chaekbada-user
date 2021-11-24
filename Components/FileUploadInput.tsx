@@ -11,8 +11,8 @@ export default function FileUploadInput(props: IProps) {
   const [progress, setProgress] = useState(0);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   AWS.config.update({
-    accessKeyId: "AKIAW3ZZO4Z4DYG7CMVO",
-    secretAccessKey: "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",
+    accessKeyId: "AKIAW3ZZO4Z4HOT7ISXF",
+    secretAccessKey: "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",
   });
   const myBucket = new AWS.S3({
     params: { Bucket: S3_BUCKET },
