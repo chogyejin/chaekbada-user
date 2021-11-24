@@ -24,6 +24,9 @@ export default function EditProfile() {
   const [fullAddress, setFullAddress] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const userID = router.query.user;
+  const [password, setPassword] = useState<string>('');
+  const [newPassword, setNewPassword] = useState<string>('');
+  const [newPasswordCheck, setNewPasswordCheck] = useState<string>('');
 
   function openPopup(e: React.FormEvent) {
     e.preventDefault();
@@ -73,6 +76,28 @@ export default function EditProfile() {
     if (result) {
       if (result.data) {
         console.log(result.data);
+        router.push('/Mypage');
+      }
+    }
+  }
+
+  async function onChangePassword() {
+    console.log(password, newPassword, newPasswordCheck);
+    const result = await axiosFunction({
+      url: '/mypage/modify/password',
+      method: 'POST',
+      params: {
+        userID,
+        password,
+        newPassword,
+      },
+    });
+
+    if (result) {
+      if (result.data !== true) {
+        alert('현재 비밀번호를 다시 입력하세요');
+      } else {
+        router.push('/Mypage');
       }
     }
   }
@@ -115,6 +140,49 @@ export default function EditProfile() {
         </div>
         <div>
           <Button onClick={onChangeAddress}>주소 변경</Button>
+        </div>
+      </div>
+      <div>
+        <div>
+          <Input
+            style={{ width: '500px', height: '50px' }}
+            placeholder="현재 비밀번호 입력"
+            type="password"
+            value={password}
+            onChange={(event) => {
+              setPassword(event.target.value);
+            }}
+          />
+        </div>
+        <div>
+          <Input
+            style={{ width: '500px', height: '50px' }}
+            placeholder="바꿀 비밀번호 입력"
+            type="password"
+            value={newPassword}
+            onChange={(event) => {
+              setNewPassword(event.target.value);
+            }}
+          />
+        </div>
+        <div>
+          <Input
+            style={{ width: '500px', height: '50px' }}
+            placeholder="바꿀 비밀번호 재입력"
+            type="password"
+            value={newPasswordCheck}
+            onChange={(event) => {
+              setNewPasswordCheck(event.target.value);
+            }}
+          />
+        </div>
+        <div>
+          {newPasswordCheck &&
+            newPassword !== newPasswordCheck &&
+            '비밀번호를 올바르게 입력하세요.'}
+        </div>
+        <div>
+          <Button onClick={onChangePassword}>비밀번호 변경</Button>
         </div>
       </div>
     </>
