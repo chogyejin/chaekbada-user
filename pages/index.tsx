@@ -9,23 +9,26 @@ interface Props {
 }
 
 export default function Home({ bookPosts }: Props) {
-  bookPosts.forEach((value, index, array) => {
-    console.log(`${index}, ${value.thumbnail}`);
-  });
-
   return (
     <>
       <HomeBanner />
       <div>
-        <div style={{ display: 'flex', placeContent: 'space-around' }}>
-          <div>최근 등록 글</div>
+        <div
+          style={{
+            display: 'flex',
+            placeContent: 'space-between',
+            alignItems: 'center',
+          }}>
+          <div style={{ fontSize: '30px' }}>최근 등록 글</div>
           <div>
             <Link href="/BookPosts">
               <Button color={'primary'}>더 보기</Button>
             </Link>
           </div>
         </div>
-        <hr />
+        <div>
+          <hr />
+        </div>
         <div style={{ display: 'flex', placeContent: 'space-around' }}>
           {bookPosts.map((bookpost, key) => (
             <div style={{ border: '1px solid black', marginTop: '20px' }}>
@@ -49,7 +52,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      bookPosts: result?.data.slice(0, 3),
+      bookPosts: result?.data.slice(0, 5),
     },
   };
 }
