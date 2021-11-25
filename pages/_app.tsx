@@ -18,7 +18,3 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     </>
   );
 }
-
-//책바다 쿠키가 있는 지 확인
-//있으면 그대로 사용
-//없으면 토큰을 발급하게
