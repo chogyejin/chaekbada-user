@@ -3,6 +3,8 @@ import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import Layout from '../Components/Layout';
 import 'bootstrap/scss/bootstrap.scss';
+import 'swiper/components/navigation/navigation.scss';
+import 'swiper/components/pagination/pagination.scss';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
