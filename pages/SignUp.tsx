@@ -76,131 +76,200 @@ export default function SignUp() {
   return (
     <>
       <div className="loginregister">
-        <form onSubmit={onSubmit}>
-          <div style={{ fontSize: '50px', margin: '0 0 50px 50px' }}>
-            회원가입
-          </div>
-          <div className="input_area">
-            <input
-              className="loginregister__input"
-              type="email"
-              placeholder="이메일 입력"
-              // ref={emailRef}
-              value={email}
-              onChange={(event) => {
-                setEmail(event.target.value);
-              }}
-            />
-            <button
-              type="button"
-              style={{ width: '100px', height: '50px' }}
-              onClick={checkEmail}>
-              중복 확인
-            </button>
-          </div>
-
-          <div className="input_area">
-            <input
-              className="loginregister__input"
-              type="password"
-              placeholder="비밀번호 입력"
-              // ref={pwdRef}
-              value={password}
-              onChange={(event) => {
-                setPassword(event.target.value);
-              }}
-            />
-          </div>
-
-          <div className="input_area">
-            <input
-              className="loginregister__input"
-              type="password"
-              placeholder="비밀번호 재입력"
-              // ref={pwdCheckRef}
-              value={passwordCheck}
-              onChange={(event) => {
-                setPasswordCheck(event.target.value);
-              }}
-            />
-          </div>
-
-          {/* 비밀번호 확인 */}
-          <div>
-            {passwordCheck &&
-              password !== passwordCheck &&
-              '비밀번호를 다시 입력하세요.'}
-          </div>
-
-          <div className="input_area">
-            <input
-              className="loginregister__input"
-              type="name"
-              placeholder="이름 입력"
-              // ref={nameRef}
-              value={name}
-              onChange={(event) => {
-                setName(event.target.value);
-              }}
-            />
-          </div>
-          <div className="input_area">
-            <input
-              className="loginregister__input"
-              type="text"
-              placeholder="학교 입력"
-              // ref={school_nameRef}
-              value={universityName}
-              onChange={(event) => {
-                setUniversityName(event.target.value);
-              }}
-            />
-          </div>
-
-          <div>
-            <input
-              className="loginregister__input"
-              type="text"
-              placeholder="주소 입력"
-              value={address}
-            />
-            <button
-              style={{ width: '100px', height: '50px' }}
-              type="button"
-              onClick={openPopup}>
-              주소 찾기
-            </button>
-            {isOpen && (
-              <>
-                <AddressComponent getAddress={getAddress} />
-              </>
-            )}
-          </div>
-          <div>
-            <input
-              className="loginregister__input"
-              type="text"
-              placeholder="상세주소 입력"
-              onChange={(event) => {
-                setFullAddress(address + ' ' + event.target.value);
-              }}
-            />
-          </div>
-          {email &&
-          password &&
-          passwordCheck &&
-          name &&
-          universityName &&
-          address &&
-          fullAddress &&
-          checkedEmail ? (
-            <button className="loginregister__button">회원가입</button>
-          ) : (
-            <button disabled className="loginregister__button_disabled">
+        <div
+          style={{
+            border: '0.5px solid rgba(0,0,0,0.2)',
+            padding: '30px 100px 100px 100px',
+            borderRadius: '20px',
+          }}>
+          <form onSubmit={onSubmit} style={{ marginLeft: '20px' }}>
+            <div style={{ fontSize: '30px', margin: '0px 0px 20px  120px' }}>
               회원가입
-            </button>
-          )}
-        </form>
+            </div>
+
+            <div className="input_area">
+              <input
+                style={{
+                  borderRadius: '10px 10px 0px 0px',
+                  border: '1px solid black',
+                }}
+                className="loginregister__input"
+                type="email"
+                placeholder="이메일 입력"
+                // ref={emailRef}
+                value={email}
+                onChange={(event) => {
+                  setEmail(event.target.value);
+                }}
+              />
+              <button
+                type="button"
+                style={{
+                  width: '100px',
+                  height: '50px',
+                  border: 'none',
+                  marginLeft: '10px',
+                }}
+                onClick={checkEmail}>
+                중복 확인
+              </button>
+            </div>
+
+            <div className="input_area">
+              <input
+                style={{
+                  borderTop: 'none',
+                  borderBottom: 'none',
+                  border: '1px solid black',
+                }}
+                className="loginregister__input"
+                type="password"
+                placeholder="비밀번호 입력"
+                // ref={pwdRef}
+                value={password}
+                onChange={(event) => {
+                  setPassword(event.target.value);
+                }}
+              />
+            </div>
+
+            <div className="input_area">
+              <input
+                style={{
+                  borderTop: 'none',
+                  borderBottom: 'none',
+                  border: '1px solid black',
+                }}
+                className="loginregister__input"
+                type="password"
+                placeholder="비밀번호 재입력"
+                // ref={pwdCheckRef}
+                value={passwordCheck}
+                onChange={(event) => {
+                  setPasswordCheck(event.target.value);
+                }}
+              />
+            </div>
+
+            {/* 비밀번호 확인 */}
+            <div>
+              {passwordCheck &&
+                password !== passwordCheck &&
+                '비밀번호를 다시 입력하세요.'}
+            </div>
+
+            <div className="input_area">
+              <input
+                style={{
+                  borderTop: 'none',
+                  borderBottom: 'none',
+                  border: '1px solid black',
+                }}
+                className="loginregister__input"
+                type="name"
+                placeholder="이름 입력"
+                // ref={nameRef}
+                value={name}
+                onChange={(event) => {
+                  setName(event.target.value);
+                }}
+              />
+            </div>
+            <div className="input_area">
+              <input
+                style={{
+                  borderTop: 'none',
+                  borderBottom: 'none',
+                  border: '1px solid black',
+                }}
+                className="loginregister__input"
+                type="text"
+                placeholder="학교 입력"
+                // ref={school_nameRef}
+                value={universityName}
+                onChange={(event) => {
+                  setUniversityName(event.target.value);
+                }}
+              />
+            </div>
+
+            <div>
+              <input
+                style={{
+                  borderTop: 'none',
+                  borderBottom: 'none',
+                  border: '1px solid black',
+                }}
+                className="loginregister__input"
+                type="text"
+                placeholder="주소 입력"
+                value={address}
+              />
+              <button
+                style={{
+                  width: '100px',
+                  height: '50px',
+                  border: 'none',
+                  marginLeft: '10px',
+                }}
+                type="button"
+                onClick={openPopup}>
+                주소 찾기
+              </button>
+              {isOpen && (
+                <>
+                  <AddressComponent getAddress={getAddress} />
+                </>
+              )}
+            </div>
+            <div>
+              <input
+                style={{
+                  borderTop: 'none',
+                  borderBottom: 'none',
+                  border: '1px solid black',
+                }}
+                className="loginregister__input"
+                type="text"
+                placeholder="상세주소 입력"
+                onChange={(event) => {
+                  setFullAddress(address + ' ' + event.target.value);
+                }}
+              />
+            </div>
+            {email &&
+            password &&
+            passwordCheck &&
+            name &&
+            universityName &&
+            address &&
+            fullAddress &&
+            checkedEmail ? (
+              <button
+                style={{
+                  color: 'black',
+                  backgroundColor: '#FF6600',
+                  borderRadius: '0px 0px 10px 10px',
+                  border: '1px solid black',
+                }}
+                className="loginregister__button">
+                회원가입
+              </button>
+            ) : (
+              <button
+                style={{
+                  color: 'black',
+                  backgroundColor: '#FF6600',
+                  borderRadius: '0px 0px 10px 10px',
+                  border: '1px solid black',
+                }}
+                disabled
+                className="loginregister__button_disabled">
+                회원가입
+              </button>
+            )}
+          </form>
+        </div>
       </div>
       <style jsx>
         {`
@@ -211,30 +280,26 @@ export default function SignUp() {
             height: 100vh;
           }
           .loginregister__input {
-            width: 300px;
+            width: 350px;
             height: 50px;
             padding-left: 10px;
-            marign: 10px;
-            border-radius: 10px;
           }
           .loginregister__button {
-            background-color: #cc99ff;
-            color: rgb(255, 255, 255);
-            font-weight: 700;
-            width: 100%;
-            border-radius: 40px;
-            height: 48px;
-            margin-top: 10px;
+            color: "black",
+            width: 350px;
+            height: 60px;
+            backgroundColor: "#FF6600",
+            borderRadius: "0px 0px 10px 10px",
+            border: "1px solid black",
           }
           .loginregister__button_disabled {
             opacity: 0.3;
-            background-color: #cc99ff;
+            background-color: #FF6600;
             color: rgb(255, 255, 255);
             font-weight: 700;
-            width: 100%;
-            border-radius: 40px;
-            height: 48px;
-            margin-top: 10px;
+            width: 350px;
+            height: 60px;
+            borderRadius: "0px 0px 10px 10px";
           }
         `}
       </style>
