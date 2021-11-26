@@ -104,85 +104,114 @@ export default function EditProfile() {
 
   return (
     <>
-      <h1>회원정보 수정하는 페이지</h1>
-      <div>
-        <div>현재 주소 : {user.address} </div>
-        <div style={{ display: 'flex' }}>
-          <Input
-            style={{ width: '400px' }}
-            className="loginregister__input"
-            type="text"
-            placeholder="주소 입력"
-            value={address}
-          />
-          <Button
-            style={{ width: '100px', height: '50px' }}
-            type="button"
-            onClick={openPopup}>
-            주소 찾기
-          </Button>
-          {isOpen && (
-            <div>
-              <AddressComponent getAddress={getAddress} />
+      <div
+        style={{
+          marginTop: '20px',
+          border: '0.5px solid rgba(0,0,0,0.2)',
+          padding: '30px 50px 100px 200px',
+          width: '1000px',
+          borderRadius: '20px',
+          marginLeft: '100px',
+        }}>
+        <div style={{ fontSize: '30px', margin: '0px 0px 20px  120px' }}>
+          내 정보 수정
+        </div>
+        <div style={{ alignContent: 'center' }}>
+          <div>
+            <div style={{ marginBottom: '10px' }}>
+              현재 주소 : {user.address}{' '}
             </div>
-          )}
-        </div>
-        <div>
-          <Input
-            style={{ width: '500px', height: '50px' }}
-            className="loginregister__input"
-            type="text"
-            placeholder="상세주소 입력"
-            onChange={(event) => {
-              setFullAddress(address + ' ' + event.target.value);
-            }}
-          />
-        </div>
-        <div>
-          <Button onClick={onChangeAddress}>주소 변경</Button>
-        </div>
-      </div>
-      <div>
-        <div>
-          <Input
-            style={{ width: '500px', height: '50px' }}
-            placeholder="현재 비밀번호 입력"
-            type="password"
-            value={password}
-            onChange={(event) => {
-              setPassword(event.target.value);
-            }}
-          />
-        </div>
-        <div>
-          <Input
-            style={{ width: '500px', height: '50px' }}
-            placeholder="바꿀 비밀번호 입력"
-            type="password"
-            value={newPassword}
-            onChange={(event) => {
-              setNewPassword(event.target.value);
-            }}
-          />
-        </div>
-        <div>
-          <Input
-            style={{ width: '500px', height: '50px' }}
-            placeholder="바꿀 비밀번호 재입력"
-            type="password"
-            value={newPasswordCheck}
-            onChange={(event) => {
-              setNewPasswordCheck(event.target.value);
-            }}
-          />
-        </div>
-        <div>
-          {newPasswordCheck &&
-            newPassword !== newPasswordCheck &&
-            '비밀번호를 올바르게 입력하세요.'}
-        </div>
-        <div>
-          <Button onClick={onChangePassword}>비밀번호 변경</Button>
+            <div style={{ display: 'flex' }}>
+              <Input
+                style={{ width: '390px' }}
+                className="loginregister__input"
+                type="text"
+                placeholder="주소 입력"
+                value={address}
+              />
+              <Button
+                style={{ width: '100px', height: '50px', marginLeft: '10px' }}
+                type="button"
+                onClick={openPopup}>
+                주소 찾기
+              </Button>
+              {isOpen && (
+                <div>
+                  <AddressComponent getAddress={getAddress} />
+                </div>
+              )}
+            </div>
+            <div
+              style={{
+                marginTop: '10px',
+                display: 'flex',
+                flexDirection: 'row',
+              }}>
+              <div>
+                <Input
+                  style={{ width: '390px', height: '50px' }}
+                  className="loginregister__input"
+                  type="text"
+                  placeholder="상세주소 입력"
+                  onChange={(event) => {
+                    setFullAddress(address + ' ' + event.target.value);
+                  }}
+                />
+              </div>
+              <div>
+                <Button
+                  style={{ width: '100px', height: '50px', marginLeft: '10px' }}
+                  onClick={onChangeAddress}>
+                  주소 변경
+                </Button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div style={{ marginTop: '20px' }}>
+              <Input
+                style={{ width: '500px', height: '50px' }}
+                placeholder="현재 비밀번호 입력"
+                type="password"
+                value={password}
+                onChange={(event) => {
+                  setPassword(event.target.value);
+                }}
+              />
+            </div>
+            <div>
+              <Input
+                style={{ width: '500px', height: '50px', marginTop: '10px' }}
+                placeholder="바꿀 비밀번호 입력"
+                type="password"
+                value={newPassword}
+                onChange={(event) => {
+                  setNewPassword(event.target.value);
+                }}
+              />
+            </div>
+            <div>
+              <Input
+                style={{ width: '500px', height: '50px', marginTop: '10px' }}
+                placeholder="바꿀 비밀번호 재입력"
+                type="password"
+                value={newPasswordCheck}
+                onChange={(event) => {
+                  setNewPasswordCheck(event.target.value);
+                }}
+              />
+            </div>
+            <div>
+              {newPasswordCheck &&
+                newPassword !== newPasswordCheck &&
+                '비밀번호를 올바르게 입력하세요.'}
+            </div>
+            <div>
+              <Button style={{ marginTop: '10px' }} onClick={onChangePassword}>
+                비밀번호 변경
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </>

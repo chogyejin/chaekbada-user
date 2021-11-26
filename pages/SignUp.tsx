@@ -285,21 +285,21 @@ export default function SignUp() {
             padding-left: 10px;
           }
           .loginregister__button {
-            color: "black",
-            width: 350px;
-            height: 60px;
-            backgroundColor: "#FF6600",
-            borderRadius: "0px 0px 10px 10px",
-            border: "1px solid black",
-          }
-          .loginregister__button_disabled {
-            opacity: 0.3;
-            background-color: #FF6600;
+            background-color: #ff6600;
             color: rgb(255, 255, 255);
             font-weight: 700;
             width: 350px;
             height: 60px;
-            borderRadius: "0px 0px 10px 10px";
+            borderradius: '0px 0px 10px 10px';
+          }
+          .loginregister__button_disabled {
+            opacity: 0.3;
+            background-color: #ff6600;
+            color: rgb(255, 255, 255);
+            font-weight: 700;
+            width: 350px;
+            height: 60px;
+            borderradius: '0px 0px 10px 10px';
           }
         `}
       </style>
