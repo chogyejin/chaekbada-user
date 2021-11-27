@@ -23,7 +23,7 @@ export default function EditProfile() {
   const [address, setAddress] = useState<string>('');
   const [fullAddress, setFullAddress] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const userID = router.query.user;
+
   const [password, setPassword] = useState<string>('');
   const [newPassword, setNewPassword] = useState<string>('');
   const [newPasswordCheck, setNewPasswordCheck] = useState<string>('');
@@ -37,6 +37,21 @@ export default function EditProfile() {
     setAddress(address);
     setIsOpen(false);
   }
+
+  let userID:any;
+  useEffect(() => {
+    const cookies = new Cookies();
+    const localCookies = cookies.get("chaekbadaUserCookie");
+    if (!localCookies) {
+      router.push("/Login");
+      return;
+    }
+    const decodedTokenTemp = jwt.verify(
+        localCookies,
+        process.env.NEXT_PUBLIC_JWT_SECRET as string
+    ) as any;
+    userID= decodedTokenTemp.id
+  }, []);
 
   useEffect(() => {
     async function getUser() {

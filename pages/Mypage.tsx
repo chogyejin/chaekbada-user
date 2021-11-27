@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Nav, NavLink, NavItem, TabContent, TabPane } from 'reactstrap';
+import React, { useEffect, useState } from "react";
+import { Button, Nav, NavLink, NavItem, TabContent, TabPane } from "reactstrap";
 
-import { axiosFunction } from '../common/utils';
-import Cookies from 'universal-cookie';
-import jwt from 'jsonwebtoken';
-import { IBook } from './BookPostDetail/[id]';
-import router from 'next/router';
+import { axiosFunction } from "../common/utils";
+import Cookies from "universal-cookie";
+import jwt from "jsonwebtoken";
+import { IBook } from "./BookPostDetail/[id]";
+import router from "next/router";
 
 export interface IUser {
   id: string;
@@ -36,18 +36,18 @@ interface IBiddingBooks extends IPosts {
 }
 export default function Mypage() {
   const [user, setUser] = useState<IUser>({
-    id: '',
-    email: '',
-    password: '',
-    name: '',
-    universityName: '',
-    address: '',
+    id: "",
+    email: "",
+    password: "",
+    name: "",
+    universityName: "",
+    address: "",
     point: 0,
     biddingPoint: 0,
-    profileImageUrl: '',
+    profileImageUrl: "",
     isAuth: true,
   });
-  const [activeTab, setActieTab] = useState<string>('1');
+  const [activeTab, setActieTab] = useState<string>("1");
   const [interestedPosts, setInterestedPosts] = useState<IInterstedPosts[]>([]);
   const [biddingBooks, setBiddingBooks] = useState<IBiddingBooks[]>([]);
   const [purschasedBooks, setPurschasedBooks] = useState<
@@ -74,25 +74,21 @@ export default function Mypage() {
       };
     }>
   >([]);
-  const cookies = new Cookies();
-  const localCookies = cookies.get('chaekbadaUserCookie');
-  const decodedToken = jwt.verify(
-    localCookies,
-    process.env.NEXT_PUBLIC_JWT_SECRET as string,
-  ) as any;
+
+
 
   useEffect(() => {
     async function getUser() {
       const cookies = new Cookies();
-      const localCookies = cookies.get('chaekbadaUserCookie');
+      const localCookies = cookies.get("chaekbadaUserCookie");
       const decodedToken = jwt.verify(
         localCookies,
-        process.env.NEXT_PUBLIC_JWT_SECRET as string,
+        process.env.NEXT_PUBLIC_JWT_SECRET as string
       ) as any;
 
       const result = await axiosFunction({
-        url: '/user',
-        method: 'GET',
+        url: "/user",
+        method: "GET",
         params: {
           id: decodedToken.id,
         },
@@ -109,15 +105,15 @@ export default function Mypage() {
   useEffect(() => {
     async function getInterestedPosts() {
       const cookies = new Cookies();
-      const localCookies = cookies.get('chaekbadaUserCookie');
+      const localCookies = cookies.get("chaekbadaUserCookie");
       const decodedToken = jwt.verify(
         localCookies,
-        process.env.NEXT_PUBLIC_JWT_SECRET as string,
+        process.env.NEXT_PUBLIC_JWT_SECRET as string
       ) as any;
 
       const result = await axiosFunction({
-        url: '/mypage/list/interest',
-        method: 'GET',
+        url: "/mypage/list/interest",
+        method: "GET",
         params: {
           userID: decodedToken.id,
         },
@@ -134,15 +130,15 @@ export default function Mypage() {
   useEffect(() => {
     async function getBiddingBooks() {
       const cookies = new Cookies();
-      const localCookies = cookies.get('chaekbadaUserCookie');
+      const localCookies = cookies.get("chaekbadaUserCookie");
       const decodedToken = jwt.verify(
         localCookies,
-        process.env.NEXT_PUBLIC_JWT_SECRET as string,
+        process.env.NEXT_PUBLIC_JWT_SECRET as string
       ) as any;
 
       const result = await axiosFunction({
-        url: '/mypage/list/bid',
-        method: 'GET',
+        url: "/mypage/list/bid",
+        method: "GET",
         params: {
           userID: decodedToken.id,
         },
@@ -158,15 +154,15 @@ export default function Mypage() {
   useEffect(() => {
     async function getPurschasedBooks() {
       const cookies = new Cookies();
-      const localCookies = cookies.get('chaekbadaUserCookie');
+      const localCookies = cookies.get("chaekbadaUserCookie");
       const decodedToken = jwt.verify(
         localCookies,
-        process.env.NEXT_PUBLIC_JWT_SECRET as string,
+        process.env.NEXT_PUBLIC_JWT_SECRET as string
       ) as any;
 
       const result = await axiosFunction({
-        url: '/mypage/list/purchase',
-        method: 'GET',
+        url: "/mypage/list/purchase",
+        method: "GET",
         params: {
           userID: decodedToken.id,
         },
@@ -213,28 +209,29 @@ export default function Mypage() {
           <div>주소:</div>
           <div>{user.address}</div>
         </div>
-        <div style={{ textAlign: 'right' }}>
+        <div style={{ textAlign: "right" }}>
           <Button
             style={{
-              marginTop: '16px',
-              backgroundColor: 'rgba(0, 0, 0, 0.9)',
-              color: '#FF6600',
-              border: 'none',
+              marginTop: "16px",
+              backgroundColor: "rgba(0, 0, 0, 0.9)",
+              color: "#FF6600",
+              border: "none",
             }}
-            onClick={() => router.push(`/EditProfile?user=${decodedToken.id}`)}>
+            onClick={() => router.push(`/EditProfile`)}
+          >
             내 정보 수정
           </Button>
         </div>
       </div>
       <Nav tabs>
         <NavItem>
-          <NavLink onClick={setActiveTab('1')}>관심글</NavLink>
+          <NavLink onClick={setActiveTab("1")}>관심글</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink onClick={setActiveTab('2')}>구매 목록</NavLink>
+          <NavLink onClick={setActiveTab("2")}>구매 목록</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink onClick={setActiveTab('3')}>입찰 참여 목록</NavLink>
+          <NavLink onClick={setActiveTab("3")}>입찰 참여 목록</NavLink>
         </NavItem>
       </Nav>
 
@@ -242,28 +239,30 @@ export default function Mypage() {
         <TabPane tabId="1">
           <div
             style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'space-between',
-              marginTop: '16px',
-            }}>
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+              marginTop: "16px",
+            }}
+          >
             {interestedPosts.map((post, id) => (
               <div
                 key={id}
                 style={{
-                  width: '33%',
-                  borderRadius: '5px',
-                  border: '1px solid black',
-                  display: 'flex',
-                  marginBottom: '15px',
-                }}>
-                <div style={{ padding: '10px' }}>
+                  width: "33%",
+                  borderRadius: "5px",
+                  border: "1px solid black",
+                  display: "flex",
+                  marginBottom: "15px",
+                }}
+              >
+                <div style={{ padding: "10px" }}>
                   <img src={post.interestedPost.thumbnail} />
                 </div>
-                <div style={{ padding: '10px' }}>
+                <div style={{ padding: "10px" }}>
                   <div>책 제목: {post.interestedPost.title}</div>
                   <div>
-                    입찰 마감 시간:{' '}
+                    입찰 마감 시간:{" "}
                     {post.interestedPost.endDate.toString().slice(0, 10)}
                   </div>
                   <div>
@@ -278,40 +277,44 @@ export default function Mypage() {
         <TabPane tabId="2">
           <div
             style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'space-between',
-              marginTop: '16px',
-            }}>
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+              marginTop: "16px",
+            }}
+          >
             {purschasedBooks.map((post, id) => (
               <div
                 key={id}
                 style={{
-                  borderRadius: '5px',
-                  width: '25%',
-                  border: '1px solid black',
-                  display: 'flex',
-                  marginBottom: '15px',
-                  justifyContent: 'space-between',
-                }}>
-                <div style={{ padding: '10px' }}>
+                  borderRadius: "5px",
+                  width: "25%",
+                  border: "1px solid black",
+                  display: "flex",
+                  marginBottom: "15px",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div style={{ padding: "10px" }}>
                   <img src={post.bookPost.thumbnail} />
                 </div>
                 <div
                   style={{
-                    padding: '10px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                  }}>
+                    padding: "10px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                  }}
+                >
                   <div>책 제목: {post.bookPost.title}</div>
                   <div
                     style={{
-                      textAlign: 'right',
-                      fontWeight: 'bold',
-                      fontSize: '1.5rem',
-                    }}>
-                    {' '}
+                      textAlign: "right",
+                      fontWeight: "bold",
+                      fontSize: "1.5rem",
+                    }}
+                  >
+                    {" "}
                     {post.bookPost.bidPrice}원에 입찰 성공
                   </div>
                 </div>
@@ -322,33 +325,35 @@ export default function Mypage() {
         <TabPane tabId="3">
           <div
             style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'space-between',
-              marginTop: '16px',
-            }}>
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+              marginTop: "16px",
+            }}
+          >
             {biddingBooks.map((post, id) => (
               <div
                 key={id}
                 style={{
-                  borderRadius: '5px',
-                  width: '33%',
-                  border: '1px solid black',
-                  display: 'flex',
-                  marginBottom: '15px',
-                }}>
-                <div style={{ padding: '10px' }}>
+                  borderRadius: "5px",
+                  width: "33%",
+                  border: "1px solid black",
+                  display: "flex",
+                  marginBottom: "15px",
+                }}
+              >
+                <div style={{ padding: "10px" }}>
                   <img src={post.bookPost.thumbnail} />
                 </div>
-                <div style={{ padding: '10px' }}>
+                <div style={{ padding: "10px" }}>
                   <div>책 제목: {post.bookPost.title}</div>
                   <div>
-                    입찰 마감 시간:{' '}
+                    입찰 마감 시간:{" "}
                     {post.bookPost.endDate.toString().slice(0, 10)}
                   </div>
                   <div>즉시 구매가: {post.bookPost.buyingItNowPrice}</div>
                   <div>현재 입찰가: {post.bookPost.bidPrice}</div>
-                  <div style={{ color: 'blue' }}>내 입찰가: {post.point}</div>
+                  <div style={{ color: "blue" }}>내 입찰가: {post.point}</div>
                 </div>
               </div>
             ))}
