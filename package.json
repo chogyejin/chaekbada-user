@@ -12,12 +12,15 @@
   "dependencies": {
     "@types/bootstrap": "^5.1.6",
     "@types/jsonwebtoken": "^8.5.5",
+    "@types/react": "^17.0.37",
     "@types/react-datepicker": "^4.1.7",
     "@types/reactstrap": "^8.7.2",
     "aws-sdk": "^2.1033.0",
     "axios": "^0.24.0",
     "bootstrap": "^5.1.3",
     "dotenv": "^10.0.0",
+    "eslint": "^8.3.0",
+    "eslint-config-next": "^12.0.4",
     "jsonwebtoken": "^8.5.1",
     "next": "11.1.2",
     "prettier": "^2.4.1",
@@ -30,12 +33,8 @@
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.0.4",
     "swiper": "^6.8.4",
+    "typescript": "^4.5.2",
     "universal-cookie": "^4.0.4"
   },
-  "devDependencies": {
-    "@types/react": "^17.0.21",
-    "eslint": "7.32.0",
-    "eslint-config-next": "11.1.2",
-    "typescript": "4.4.3"
-  }
+  "devDependencies": {}
 }
