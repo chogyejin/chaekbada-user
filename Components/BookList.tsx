@@ -1,7 +1,6 @@
 import { IBookPosts } from '../pages/BookPosts';
 import { axiosFunction } from '../common/utils';
 import Link from 'next/link';
-import BookPost from '../pages/BookPostDetail/[id]';
 import { Button } from 'reactstrap';
 import { useEffect, useState } from 'react';
 import Cookies from 'universal-cookie';

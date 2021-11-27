@@ -1,28 +1,26 @@
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import "semantic-ui-css/semantic.min.css";
-import Cookies from "universal-cookie";
-import jwt from "jsonwebtoken";
-import { onLogout, onMoveLoginPage } from "../common/utils";
-import { Button } from "reactstrap";
-import React from "react";
-import router from "next/router";
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import 'semantic-ui-css/semantic.min.css';
+import Cookies from 'universal-cookie';
+import jwt from 'jsonwebtoken';
+import { onLogout, onMoveLoginPage } from '../common/utils';
+import React from 'react';
 
 const Header = () => {
   const [isVerifiedToken, setIsVerifiedToken] = useState<boolean>(false);
-  const [searchWord, setSearchWord] = useState<string>("");
+  const [searchWord, setSearchWord] = useState<string>('');
 
   useEffect(() => {
     const cookies = new Cookies();
-    const localCookies = cookies.get("chaekbadaUserCookie");
+    const localCookies = cookies.get('chaekbadaUserCookie');
     const hasCookies = !!localCookies;
     if (hasCookies) {
       setIsVerifiedToken(
         !!jwt.verify(
           //확실한 논리연산자 !!
           localCookies,
-          process.env.NEXT_PUBLIC_JWT_SECRET as string
-        )
+          process.env.NEXT_PUBLIC_JWT_SECRET as string,
+        ),
       );
     } else {
       setIsVerifiedToken(false);
@@ -30,7 +28,7 @@ const Header = () => {
   });
 
   const enterKey = (e: any) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       window.open(`/BookPosts?searchWord=${searchWord}`);
     }
   };
@@ -42,14 +40,14 @@ const Header = () => {
           <ul className="top-menu">
             <li className="left">
               <Link href="/BookPosts">
-                <span style={{ color: "white", cursor: "pointer" }}>
+                <span style={{ color: 'white', cursor: 'pointer' }}>
                   전체 책
                 </span>
               </Link>
             </li>
             <li className="left">
               <Link href="/SolutionPosts">
-                <span style={{ color: "white", cursor: "pointer" }}>
+                <span style={{ color: 'white', cursor: 'pointer' }}>
                   솔루션 게시판
                 </span>
               </Link>
@@ -58,13 +56,13 @@ const Header = () => {
             {isVerifiedToken ? (
               <React.Fragment>
                 <li className="right">
-                  <div style={{ cursor: "pointer" }} onClick={onLogout}>
+                  <div style={{ cursor: 'pointer' }} onClick={onLogout}>
                     로그아웃
                   </div>
                 </li>
                 <li className="right">
                   <Link href="/Mypage">
-                    <span style={{ color: "white", cursor: "pointer" }}>
+                    <span style={{ color: 'white', cursor: 'pointer' }}>
                       마이페이지
                     </span>
                   </Link>
@@ -74,13 +72,13 @@ const Header = () => {
               <React.Fragment>
                 <li className="right">
                   <Link href="/SignUp">
-                    <span style={{ color: "white", cursor: "pointer" }}>
+                    <span style={{ color: 'white', cursor: 'pointer' }}>
                       회원가입
                     </span>
                   </Link>
                 </li>
                 <li className="right">
-                  <div style={{ cursor: "pointer" }} onClick={onMoveLoginPage}>
+                  <div style={{ cursor: 'pointer' }} onClick={onMoveLoginPage}>
                     로그인
                   </div>
                 </li>
@@ -90,7 +88,7 @@ const Header = () => {
           <div className="top-secondLine">
             <div id="logo">
               <Link href="/">
-                <span style={{ color: "#FF6600", cursor: "pointer" }}>
+                <span style={{ color: '#FF6600', cursor: 'pointer' }}>
                   CHAECKBADA
                 </span>
               </Link>
@@ -148,7 +146,7 @@ const Header = () => {
           .top #logo {
             margin-left: 5%;
             flex-grow: 1;
-            font-family: "Raleway:wght@200", cursive;
+            font-family: 'Raleway:wght@200', cursive;
             font-size: 35px;
             padding-top: 8px;
           }

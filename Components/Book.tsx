@@ -80,7 +80,10 @@ export default function Book({ book, bookPostID }: Props) {
               bidPrice: String(offeredPrice),
             },
           });
-          console.log(result?.data);
+          if (result?.data) {
+            alert('입찰에 성공했습니다.');
+            console.log(result?.data);
+          }
         }
       }
     }
@@ -99,7 +102,10 @@ export default function Book({ book, bookPostID }: Props) {
             bidPrice: String(offeredPrice),
           },
         });
-        console.log(result?.data);
+        if (result?.data) {
+          alert('입찰에 성공했습니다.');
+          console.log(result?.data);
+        }
       }
     }
   }

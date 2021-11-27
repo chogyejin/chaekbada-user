@@ -10,7 +10,6 @@ export default function SignUp() {
   const [passwordCheck, setPasswordCheck] = useState<string>('');
   const [name, setName] = useState<string>('');
   const [universityName, setUniversityName] = useState<string>('');
-  //포인트, 비딩포인트, 프로필url, isAuth는 임시
   const point = 0;
   const biddingPoint = 0;
   const profileImageUrl = 'image';

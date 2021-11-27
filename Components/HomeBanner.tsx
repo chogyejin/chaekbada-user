@@ -2,7 +2,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.min.css';
 import 'swiper/components/navigation/navigation.min.css';
 import SwiperCore, { Navigation, Pagination } from 'swiper';
-import { urlObjectKeys } from 'next/dist/shared/lib/utils';
 
 export default function HomeBanner() {
   SwiperCore.use([Navigation, Pagination]);

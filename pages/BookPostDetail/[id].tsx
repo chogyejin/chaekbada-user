@@ -69,7 +69,7 @@ export default function BookPost() {
 
   return (
     <>
-      <div className={"book-post-page-detail-container"}>
+      <div className={'book-post-page-detail-container'}>
         <Book book={book} bookPostID={bookPostID} />
       </div>
       <style jsx={true}>
@@ -86,5 +86,3 @@ export default function BookPost() {
     </>
   );
 }
-
-// bookPost.id로 책 post 정보 받아오고 Book 컴포넌트로 정보 넘김
