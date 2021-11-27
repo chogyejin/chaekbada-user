@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import AWS from 'aws-sdk';
-import { REGION, S3_BUCKET, S3_BUCKET_BASE_URL } from '../common/constant';
+import {ACCESS_KEY_ID, REGION, S3_BUCKET, S3_BUCKET_BASE_URL, SECRET_ACCESS_KEY} from '../common/constant';
 import { Button, Input, InputGroup } from 'reactstrap';
 
 interface IProps {
@@ -11,8 +11,8 @@ export default function FileUploadInput(props: IProps) {
   const [progress, setProgress] = useState(0);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   AWS.config.update({
-    accessKeyId: 'AKIAW3ZZO4Z4P5KVF3Z2',
-    secretAccessKey: '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',
+    accessKeyId: ACCESS_KEY_ID,
+    secretAccessKey: SECRET_ACCESS_KEY,
   });
   const myBucket = new AWS.S3({
     params: { Bucket: S3_BUCKET },
