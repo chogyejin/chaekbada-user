@@ -31,6 +31,7 @@ yarn-error.log*
 .idea
 
 .env.development
+.env.local
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
