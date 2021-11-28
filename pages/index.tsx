@@ -3,20 +3,12 @@ import { IBook } from '../pages/BookPostDetail/[id]';
 import HomeBanner from '../Components/HomeBanner';
 import Link from 'next/link';
 import { Button } from 'reactstrap';
-import {
-  ACCESS_KEY_ID,
-  IS_PRODUCTION,
-  SECRET_ACCESS_KEY,
-} from '../common/constant';
 
 interface Props {
   bookPosts: IBook[];
 }
 
 export default function Home({ bookPosts }: Props) {
-  console.log(IS_PRODUCTION);
-  console.log(ACCESS_KEY_ID);
-  console.log(SECRET_ACCESS_KEY);
   return (
     <>
       <HomeBanner />
@@ -51,7 +43,7 @@ export default function Home({ bookPosts }: Props) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const result = await axiosFunction({
     url: '/bookPostList/new',
     method: 'GET',
@@ -59,7 +51,9 @@ export async function getServerSideProps() {
       isActive: true,
     },
   });
-
+  if (!result) {
+    return;
+  }
   return {
     props: {
       bookPosts: result?.data.slice(0, 5),

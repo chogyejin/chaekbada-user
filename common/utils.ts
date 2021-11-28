@@ -1,6 +1,7 @@
 import axios from 'axios';
 import router from 'next/router';
 import Cookies from 'universal-cookie';
+import { BACKEND_ENDPOINT } from './constant';
 // import { BACKEND_ENDPOINT } from './constant';
 
 export const GUEST_TOKEN =
@@ -27,8 +28,7 @@ export const axiosFunction = async (args: {
     switch (method) {
       case 'POST': {
         return await axios.post(
-          // `${BACKEND_ENDPOINT}${url}`,
-          `http://localhost:4000${url}`,
+          `${BACKEND_ENDPOINT}${url}`,
           {}, //2번째 파라미터는 request.body
           {
             headers, //headers는 3번째 파라미터
@@ -40,20 +40,15 @@ export const axiosFunction = async (args: {
       }
 
       case 'GET': {
-        return await axios.get(
-          // `${BACKEND_ENDPOINT}${url}`,
-          `http://localhost:4000${url}`,
-          {
-            params,
-            headers,
-          },
-        );
+        return await axios.get(`${BACKEND_ENDPOINT}${url}`, {
+          params,
+          headers,
+        });
       }
 
       case 'PUT': {
         return await axios.put(
-          // `${BACKEND_ENDPOINT}${url}`,
-          `http://localhost:4000${url}`,
+          `${BACKEND_ENDPOINT}${url}`,
           {},
           {
             headers,
