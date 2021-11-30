@@ -13,6 +13,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <title>책바다</title>
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta
+          http-equiv="Content-Security-Policy"
+          content="upgrade-insecure-requests"></meta>
       </Head>
       <Layout>
         <Component {...pageProps} />
