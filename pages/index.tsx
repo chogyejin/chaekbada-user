@@ -43,7 +43,7 @@ export default function Home({ bookPosts }: Props) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const result = await axiosFunction({
     url: '/bookPostList/new',
     method: 'GET',
@@ -51,9 +51,7 @@ export async function getStaticProps() {
       isActive: true,
     },
   });
-  if (!result) {
-    return;
-  }
+
   return {
     props: {
       bookPosts: result?.data.slice(0, 5),
