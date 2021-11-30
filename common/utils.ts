@@ -59,7 +59,7 @@ export const axiosFunction = async (args: {
     }
   } catch (error) {
     if (typeof window !== 'undefined') {
-      alert('에러');
+      alert();
     }
   }
 };
